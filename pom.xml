@@ -4,7 +4,7 @@
 
 	<groupId>com.appleframework.orm</groupId>
 	<artifactId>apple-orm</artifactId>
-	<version>0.0.3.RELEASE</version>
+	<version>0.0.4.RELEASE</version>
 	<packaging>pom</packaging>
 
 	<name>apple-orm</name>
