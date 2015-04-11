@@ -6,7 +6,7 @@
 	<parent>
 		<artifactId>apple-orm</artifactId>
 		<groupId>com.appleframework.orm</groupId>
-		<version>0.0.3.RELEASE</version>
+		<version>0.0.4.RELEASE</version>
 	</parent>
 	<artifactId>apple-orm-hibernate</artifactId>
 	<name>apple-orm-hibernate</name>
@@ -16,6 +16,7 @@
 	</properties>
 
 	<dependencies>
+		
 		<dependency>
 			<groupId>com.appleframework</groupId>
 			<artifactId>appleframework-model</artifactId>
@@ -26,6 +27,7 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
