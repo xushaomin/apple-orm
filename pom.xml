@@ -200,7 +200,7 @@
 
 			<dependency>
 				<groupId>com.appleframework</groupId>
-				<artifactId>appleframework-model</artifactId>
+				<artifactId>apple-model</artifactId>
 				<version>${apple.version}</version>
 			</dependency>
 			
