@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.xml.bind.PropertyException;
@@ -65,19 +66,34 @@ public class PaginationInterceptor implements Interceptor {
 		BoundSql boundSql = delegate.getBoundSql();
 		// 获得查询对象
 		Object parameterObject = boundSql.getParameterObject();
+		Pagination page = null;
+		
 		// 根据参数类型判断是否是分页方法
-		if (!(parameterObject instanceof PageQuery)) {
+		if (parameterObject instanceof PageQuery) {
+			PageQuery query = (PageQuery) parameterObject;
+			// 查询参数对象
+			
+			// 查询条件Map
+			//Map<String, Object> conditions = query.getQueryParams();
+			page = query.getDefaultPage();
+		}
+		else if(parameterObject instanceof Map) {
+			@SuppressWarnings("unchecked")
+			Map<String, Object> query = (Map<String, Object>) parameterObject;
+			if(null != query.get("page")) {
+				page = (Pagination)query.get("page");
+			}
+			else {
+				return ivk.proceed();
+			}
+		}
+		else {
 			return ivk.proceed();
 		}
 		logger.debug(" beginning to intercept page SQL...");
 		Connection connection = (Connection) ivk.getArgs()[0];
 		String sql = boundSql.getSql();
-		PageQuery query = (PageQuery) parameterObject;
-		// 查询参数对象
-		Pagination page = null;
-		// 查询条件Map
-		//Map<String, Object> conditions = query.getQueryParams();
-		page = query.getDefaultPage();
+		
 		// 拼装查询条件
 		/*if (conditions != null) {
 			Set<String> keys = conditions.keySet();
@@ -137,15 +153,12 @@ public class PaginationInterceptor implements Interceptor {
 	private void setParameters(PreparedStatement ps,
 			MappedStatement mappedStatement, BoundSql boundSql,
 			Object parameterObject) throws SQLException {
-		ErrorContext.instance().activity("setting parameters")
-				.object(mappedStatement.getParameterMap().getId());
+		ErrorContext.instance().activity("setting parameters").object(mappedStatement.getParameterMap().getId());
 		List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
 		if (parameterMappings != null) {
 			Configuration configuration = mappedStatement.getConfiguration();
-			TypeHandlerRegistry typeHandlerRegistry = configuration
-					.getTypeHandlerRegistry();
-			MetaObject metaObject = parameterObject == null ? null
-					: configuration.newMetaObject(parameterObject);
+			TypeHandlerRegistry typeHandlerRegistry = configuration.getTypeHandlerRegistry();
+			MetaObject metaObject = parameterObject == null ? null : configuration.newMetaObject(parameterObject);
 			for (int i = 0; i < parameterMappings.size(); i++) {
 				ParameterMapping parameterMapping = parameterMappings.get(i);
 				if (parameterMapping.getMode() != ParameterMode.OUT) {
@@ -154,36 +167,28 @@ public class PaginationInterceptor implements Interceptor {
 					PropertyTokenizer prop = new PropertyTokenizer(propertyName);
 					if (parameterObject == null) {
 						value = null;
-					} else if (typeHandlerRegistry
-							.hasTypeHandler(parameterObject.getClass())) {
+					} else if (typeHandlerRegistry.hasTypeHandler(parameterObject.getClass())) {
 						value = parameterObject;
 					} else if (boundSql.hasAdditionalParameter(propertyName)) {
 						value = boundSql.getAdditionalParameter(propertyName);
-					} else if (propertyName
-							.startsWith(ForEachSqlNode.ITEM_PREFIX)
+					} else if (propertyName.startsWith(ForEachSqlNode.ITEM_PREFIX)
 							&& boundSql.hasAdditionalParameter(prop.getName())) {
 						value = boundSql.getAdditionalParameter(prop.getName());
 						if (value != null) {
-							value = configuration.newMetaObject(value)
-									.getValue(
-											propertyName.substring(prop
-													.getName().length()));
+							value = configuration.newMetaObject(value).getValue(propertyName.substring(prop.getName().length()));
 						}
 					} else {
-						value = metaObject == null ? null : metaObject
-								.getValue(propertyName);
+						value = metaObject == null ? null : metaObject.getValue(propertyName);
 					}
 					@SuppressWarnings("unchecked")
-					TypeHandler<Object> typeHandler = (TypeHandler<Object>) parameterMapping
-							.getTypeHandler();
+					TypeHandler<Object> typeHandler = (TypeHandler<Object>) parameterMapping.getTypeHandler();
 					if (typeHandler == null) {
 						throw new ExecutorException(
 								"There was no TypeHandler found for parameter "
 										+ propertyName + " of statement "
 										+ mappedStatement.getId());
 					}
-					typeHandler.setParameter(ps, i + 1, value,
-							parameterMapping.getJdbcType());
+					typeHandler.setParameter(ps, i + 1, value, parameterMapping.getJdbcType());
 				}
 			}
 		}
