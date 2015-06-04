@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -36,12 +37,14 @@ import org.hibernate.type.Type;
 import org.springframework.util.Assert;
 
 import com.appleframework.model.page.Pagination;
+import com.appleframework.orm.hibernate.model.BaseEntity;
 import com.appleframework.orm.hibernate.types.Condition;
 import com.appleframework.orm.hibernate.types.Finder;
 import com.appleframework.orm.hibernate.types.Nullable;
 import com.appleframework.orm.hibernate.types.OrderBy;
 import com.appleframework.orm.hibernate.types.Updater;
 import com.appleframework.orm.hibernate.utils.BeanUtility;
+import com.appleframework.orm.hibernate.utils.ReflectionUtility;
 
 /**
  * DAO基类。
@@ -51,9 +54,9 @@ import com.appleframework.orm.hibernate.utils.BeanUtility;
  * 
  * @param <T>
  */
-public class HibernateBaseDAO {
+public class HibernateBaseDAO2 {
 	
-	private static Logger logger = Logger.getLogger(HibernateBaseDAO.class);
+	private static Logger logger = Logger.getLogger(HibernateBaseDAO2.class);
 	
 	private SessionFactory sessionFactory;
 	
@@ -76,6 +79,9 @@ public class HibernateBaseDAO {
 	 */
 	public Serializable save(Object entity) throws HibernateException {
 		Assert.notNull(entity);
+		try {
+			ReflectionUtility.invokeSetterMethod(entity, BaseEntity.CREATE_TIME_PROPERTY_NAME, new Date());
+		} catch (Exception e) {}
 		return getSession().save(entity);
 	}
 	
@@ -98,6 +104,9 @@ public class HibernateBaseDAO {
 	 */
 	public void update(Object entity) throws HibernateException {
 		Assert.notNull(entity);
+		try {
+			ReflectionUtility.invokeSetterMethod(entity, BaseEntity.UPDATE_TIME_PROPERTY_NAME, new Date());
+		} catch (Exception e) {}
 		getSession().update(entity);
 	}
 
@@ -130,6 +139,10 @@ public class HibernateBaseDAO {
 	 */
 	public void saveOrUpdate(Object entity) throws HibernateException {
 		Assert.notNull(entity);
+		try {
+			ReflectionUtility.invokeSetterMethod(entity, BaseEntity.CREATE_TIME_PROPERTY_NAME, new Date());
+			ReflectionUtility.invokeSetterMethod(entity, BaseEntity.UPDATE_TIME_PROPERTY_NAME, new Date());
+		} catch (Exception e) {}
 		getSession().saveOrUpdate(entity);
 	}
 
@@ -146,6 +159,10 @@ public class HibernateBaseDAO {
 			throw new HibernateException(this.getClass() + ": The objList to saveOrUpdate is null!");
 		}
 		for (Object object : objList) {
+			try {
+				ReflectionUtility.invokeSetterMethod(object, BaseEntity.CREATE_TIME_PROPERTY_NAME, new Date());
+				ReflectionUtility.invokeSetterMethod(object, BaseEntity.CREATE_TIME_PROPERTY_NAME, new Date());
+			} catch (Exception e) {}
 			getSession().saveOrUpdate(object);
 		}		
 	}
@@ -157,6 +174,9 @@ public class HibernateBaseDAO {
 	 */
 	public Object merge(Object entity) throws HibernateException {
 		Assert.notNull(entity);
+		try {
+			ReflectionUtility.invokeSetterMethod(entity, BaseEntity.UPDATE_TIME_PROPERTY_NAME, new Date());
+		} catch (Exception e) {}
 		return getSession().merge(entity);
 	}
 
@@ -611,6 +631,9 @@ public class HibernateBaseDAO {
 	}
 
 	public Object updateDefault(Object entity) {
+		try {
+			ReflectionUtility.invokeSetterMethod(entity, BaseEntity.CREATE_TIME_PROPERTY_NAME, new Date());
+		} catch (Exception e) {}
 		return updateByUpdater(Updater.create(entity));
 	}
 

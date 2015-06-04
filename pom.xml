@@ -4,7 +4,7 @@
 
 	<groupId>com.appleframework.orm</groupId>
 	<artifactId>apple-orm</artifactId>
-	<version>0.0.4.RELEASE</version>
+	<version>0.0.5.RELEASE</version>
 	<packaging>pom</packaging>
 
 	<name>apple-orm</name>
@@ -20,7 +20,7 @@
 		<commons.lang3.version>3.1</commons.lang3.version>
 		<commons.beanutils.version>1.7.0</commons.beanutils.version>
 		<mysql.version>5.1.16</mysql.version>
-		<apple.version>0.0.4.RELEASE</apple.version>
+		<apple.version>0.1.0.RELEASE</apple.version>
 		
 		<mybatis.version>3.2.2</mybatis.version>
 		<mybatis.spring.version>1.2.0</mybatis.spring.version>
@@ -227,8 +227,8 @@
 	
 	<modules>
 		<module>apple-orm-hibernate</module>
-    <module>apple-orm-mybatis</module>
-  </modules>
+    	<module>apple-orm-mybatis</module>
+  	</modules>
 	
 	<build>
 		<plugins>
