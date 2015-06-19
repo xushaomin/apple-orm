@@ -10,6 +10,7 @@ import java.util.Properties;
 
 import javax.xml.bind.PropertyException;
 
+import org.apache.ibatis.binding.BindingException;
 import org.apache.ibatis.executor.ErrorContext;
 import org.apache.ibatis.executor.ExecutorException;
 import org.apache.ibatis.executor.statement.BaseStatementHandler;
@@ -77,11 +78,18 @@ public class PaginationInterceptor implements Interceptor {
 			//Map<String, Object> conditions = query.getQueryParams();
 			page = query.getDefaultPage();
 		}
+
 		else if(parameterObject instanceof Map) {
 			@SuppressWarnings("unchecked")
 			Map<String, Object> query = (Map<String, Object>) parameterObject;
-			if(null != query.get("page")) {
-				page = (Pagination)query.get("page");
+			Object pageObj = null;
+			try {
+				pageObj = query.get("page");
+			} catch (BindingException e) {
+				pageObj = null;
+			}
+			if(null != pageObj) {
+				page = (Pagination)pageObj;
 			}
 			else {
 				return ivk.proceed();
