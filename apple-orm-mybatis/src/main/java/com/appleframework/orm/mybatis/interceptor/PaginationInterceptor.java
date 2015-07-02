@@ -82,18 +82,13 @@ public class PaginationInterceptor implements Interceptor {
 		else if(parameterObject instanceof Map) {
 			@SuppressWarnings("unchecked")
 			Map<String, Object> query = (Map<String, Object>) parameterObject;
-			Object pageObj = null;
 			try {
-				pageObj = query.get("page");
+				page = (Pagination)query.get("page");
 			} catch (BindingException e) {
-				pageObj = null;
+				page = null;
 			}
-			if(null != pageObj) {
-				page = (Pagination)pageObj;
-			}
-			else {
+			if(null == page)
 				return ivk.proceed();
-			}
 		}
 		else {
 			return ivk.proceed();
@@ -136,6 +131,7 @@ public class PaginationInterceptor implements Interceptor {
 
 		// 设置总记录数
 		page.setTotalCount(count);
+		page.adjustPageNo();
 		// 设置总页数
 		//page.setTotalPage((count + page.getPageSize() - 1) / page.getPageSize());
 		// 放到作用于
