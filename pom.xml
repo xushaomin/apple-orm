@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.appleframework.orm</groupId>
 	<artifactId>apple-orm</artifactId>
-	<version>0.0.5.RELEASE</version>
+	<version>0.0.6.RELEASE</version>
 	<packaging>pom</packaging>
 
 	<name>apple-orm</name>
@@ -21,9 +22,9 @@
 		<commons.beanutils.version>1.7.0</commons.beanutils.version>
 		<mysql.version>5.1.16</mysql.version>
 		<apple.version>0.1.0.RELEASE</apple.version>
-		
-		<mybatis.version>3.2.2</mybatis.version>
-		<mybatis.spring.version>1.2.0</mybatis.spring.version>
+
+		<mybatis.version>3.3.0</mybatis.version>
+		<mybatis.spring.version>1.2.3</mybatis.spring.version>
 	</properties>
 
 	<dependencyManagement>
@@ -203,7 +204,7 @@
 				<artifactId>apple-model</artifactId>
 				<version>${apple.version}</version>
 			</dependency>
-			
+
 			<!-- mybaties -->
 			<dependency>
 				<groupId>org.mybatis</groupId>
@@ -224,12 +225,12 @@
 
 		</dependencies>
 	</dependencyManagement>
-	
+
 	<modules>
 		<module>apple-orm-hibernate</module>
-    	<module>apple-orm-mybatis</module>
-  	</modules>
-	
+		<module>apple-orm-mybatis</module>
+	</modules>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -303,5 +304,5 @@
 			</distributionManagement>
 		</profile>
 	</profiles>
-	
+
 </project>
