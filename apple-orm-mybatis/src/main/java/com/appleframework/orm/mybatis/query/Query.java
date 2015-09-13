@@ -2,7 +2,7 @@ package com.appleframework.orm.mybatis.query;
 
 import java.util.Map;
 
-import com.appleframework.model.Operater;
+import com.appleframework.model.Operator;
 import com.appleframework.model.page.Pagination;
 
 /**
@@ -49,17 +49,17 @@ public interface Query extends Map<String, Object> {
 	 * 给Operater压入第一个默认Operater对象<br>
 	 * 为了方便存取(省去根据Key来存取和类型转换的过程)
 	 * 
-	 * @param Operater
+	 * @param Operator
 	 *            压入Dto的Operater对象
 	 */
-	public void setDefaultOperater(Operater operater);
+	public void setDefaultOperater(Operator operater);
 	
 	/**
 	 * 获取第一个默认Operater对象<br>
 	 * 为了方便存取(省去根据Key来存取和类型转换的过程)
-	 * @param Operater 压入Operater的PO对象
+	 * @param Operator 压入Operater的PO对象
 	 */
-	public Operater getDefaultOperater();
+	public Operator getDefaultOperater();
 	
 	/**
 	 * 给ids压入第一个默认ids对象<br>

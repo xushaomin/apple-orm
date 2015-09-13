@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.appleframework.model.Operater;
+import com.appleframework.model.Operator;
 import com.appleframework.model.page.Pagination;
 import com.appleframework.model.utils.TypeCaseHelper;
 
@@ -201,13 +201,13 @@ public class PageQuery extends HashMap<String, Object> implements Query {
 	}
 
 	@Override
-	public void setDefaultOperater(Operater operater) {
+	public void setDefaultOperater(Operator operater) {
 		put("defaultOperater", operater);
 	}
 
 	@Override
-	public Operater getDefaultOperater() {
-		return (Operater) get("defaultOperater");
+	public Operator getDefaultOperater() {
+		return (Operator) get("defaultOperater");
 	}
 
 	@Override

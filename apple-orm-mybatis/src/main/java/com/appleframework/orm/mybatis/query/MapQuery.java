@@ -3,7 +3,7 @@ package com.appleframework.orm.mybatis.query;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.appleframework.model.Operater;
+import com.appleframework.model.Operator;
 import com.appleframework.model.page.Pagination;
 
 /**
@@ -32,7 +32,7 @@ public class MapQuery extends HashMap<String, Object> implements Query  {
 	}
 
 	@Override
-	public void setDefaultOperater(Operater operater) {
+	public void setDefaultOperater(Operator operater) {
 		this.put("operater", operater);
 	}
 
@@ -52,8 +52,8 @@ public class MapQuery extends HashMap<String, Object> implements Query  {
 	}
 
 	@Override
-	public Operater getDefaultOperater() {
-		return (Operater) get("defaultOperater");
+	public Operator getDefaultOperater() {
+		return (Operator) get("defaultOperater");
 	}
 	
 	/**
