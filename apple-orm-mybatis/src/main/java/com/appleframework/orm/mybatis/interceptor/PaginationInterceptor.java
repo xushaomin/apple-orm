@@ -34,6 +34,8 @@ import org.apache.ibatis.type.TypeHandlerRegistry;
 import org.apache.log4j.Logger;
 
 import com.appleframework.model.page.Pagination;
+import com.appleframework.orm.mybatis.parser.SqlParser;
+import com.appleframework.orm.mybatis.parser.SqlServer;
 import com.appleframework.orm.mybatis.query.PageQuery;
 import com.appleframework.orm.mybatis.utils.SystemUtility;
 
@@ -116,7 +118,15 @@ public class PaginationInterceptor implements Interceptor {
 		}*/
 
 		// 获取查询数来的总数目
-		String countSql = "SELECT COUNT(0) FROM (" + sql + ") AS tmp ";
+		//String countSql = "SELECT COUNT(0) FROM (" + sql + ") AS tmp ";
+		String countSql = null;
+		if ("sqlserver".equals(dialect)) {
+			countSql = SqlParser.getSmartCountSql(sql);
+		}
+		else {
+			countSql = SqlParser.getSimpleCountSql(sql);
+		}
+		
 		PreparedStatement countStmt = connection.prepareStatement(countSql);
 		BoundSql countBS = new BoundSql(mappedStatement.getConfiguration(),
 				countSql, boundSql.getParameterMappings(), parameterObject);
@@ -218,11 +228,19 @@ public class PaginationInterceptor implements Interceptor {
 				pageSql.append(page.getFirstResult() + page.getPageSize());
 				pageSql.append(") WHERE r >");
 				pageSql.append(page.getFirstResult());
+			} else if ("sqlserver".equals(dialect)) {
+				return SqlServer.convertToPageSql(sql, (page.getPageNo() - 1) * page.getPageSize(), page.getPageSize());
+			} else {
+				
 			}
 			return pageSql.toString();
 		} else {
 			return sql;
 		}
+	}	
+
+	public void setDialect(String dialect) {
+		this.dialect = dialect;
 	}
 
 	public Object plugin(Object arg0) {
