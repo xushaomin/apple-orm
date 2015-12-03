@@ -16,41 +16,41 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.appleframework.model.page.Pagination;
 
 /**
- * ½«sqlserver²éÑ¯Óï¾ä×ª»»Îª·ÖÒ³Óï¾ä<br>
- * ×¢ÒâÊÂÏî£º<br>
+ * å°†sqlserveræŸ¥è¯¢è¯­å¥è½¬æ¢ä¸ºåˆ†é¡µè¯­å¥<br>
+ * æ³¨æ„äº‹é¡¹ï¼š<br>
  * <ol>
- * <li>ÇëÏÈ±£Ö¤ÄãµÄSQL¿ÉÒÔÖ´ĞĞ</li>
- * <li>sqlÖĞ×îºÃÖ±½Ó°üº¬order by£¬¿ÉÒÔ×Ô¶¯´ÓsqlÌáÈ¡</li>
- * <li>Èç¹ûÃ»ÓĞorder by£¬¿ÉÒÔÍ¨¹ıÈë²ÎÌá¹©£¬µ«ÊÇĞèÒª×Ô¼º±£Ö¤ÕıÈ·</li>
- * <li>Èç¹ûsqlÓĞorder by£¬¿ÉÒÔÍ¨¹ıorderby²ÎÊı¸²¸ÇsqlÖĞµÄorder by</li>
- * <li>order byµÄÁĞÃû²»ÄÜÊ¹ÓÃ±ğÃû</li>
- * <li>±íºÍÁĞÊ¹ÓÃ±ğÃûµÄÊ±ºò²»ÒªÊ¹ÓÃµ¥ÒıºÅ(')</li>
+ * <li>è¯·å…ˆä¿è¯ä½ çš„SQLå¯ä»¥æ‰§è¡Œ</li>
+ * <li>sqlä¸­æœ€å¥½ç›´æ¥åŒ…å«order byï¼Œå¯ä»¥è‡ªåŠ¨ä»sqlæå–</li>
+ * <li>å¦‚æœæ²¡æœ‰order byï¼Œå¯ä»¥é€šè¿‡å…¥å‚æä¾›ï¼Œä½†æ˜¯éœ€è¦è‡ªå·±ä¿è¯æ­£ç¡®</li>
+ * <li>å¦‚æœsqlæœ‰order byï¼Œå¯ä»¥é€šè¿‡orderbyå‚æ•°è¦†ç›–sqlä¸­çš„order by</li>
+ * <li>order byçš„åˆ—åä¸èƒ½ä½¿ç”¨åˆ«å</li>
+ * <li>è¡¨å’Œåˆ—ä½¿ç”¨åˆ«åçš„æ—¶å€™ä¸è¦ä½¿ç”¨å•å¼•å·(')</li>
  * </ol>
- * ¸ÃÀàÉè¼ÆÎªÒ»¸ö¶ÀÁ¢µÄ¹¤¾ßÀà£¬ÒÀÀµjsqlparser,¿ÉÒÔ¶ÀÁ¢Ê¹ÓÃ
+ * è¯¥ç±»è®¾è®¡ä¸ºä¸€ä¸ªç‹¬ç«‹çš„å·¥å…·ç±»ï¼Œä¾èµ–jsqlparser,å¯ä»¥ç‹¬ç«‹ä½¿ç”¨
  *
  * @author liuzh
  */
 public class SqlServer {
-    //»º´æ½á¹û
+    //ç¼“å­˜ç»“æœ
     private static final Map<String, String> CACHE = new ConcurrentHashMap<String, String>();
-    //¿ªÊ¼ĞĞºÅ
+    //å¼€å§‹è¡Œå·
     private static final String START_ROW = String.valueOf(Long.MIN_VALUE);
-    //½áÊøĞĞºÅ
+    //ç»“æŸè¡Œå·
     private static final String PAGE_SIZE = String.valueOf(Long.MAX_VALUE);
-    //Íâ²ã°ü×°±í
+    //å¤–å±‚åŒ…è£…è¡¨
     private static final String WRAP_TABLE = "WRAP_OUTER_TABLE";
-    //±í±ğÃûÃû×Ö
+    //è¡¨åˆ«ååå­—
     private static final String PAGE_TABLE_NAME = "PAGE_TABLE_ALIAS";
     //private
     public static final Alias PAGE_TABLE_ALIAS = new Alias(PAGE_TABLE_NAME);
-    //ĞĞºÅ
+    //è¡Œå·
     private static final String PAGE_ROW_NUMBER = "PAGE_ROW_NUMBER";
-    //ĞĞºÅÁĞ
+    //è¡Œå·åˆ—
     private static final Column PAGE_ROW_NUMBER_COLUMN = new Column(PAGE_ROW_NUMBER);
     //TOP 100 PERCENT
     private static final Top TOP100_PERCENT;
 
-    //¾²Ì¬·½·¨´¦Àí
+    //é™æ€æ–¹æ³•å¤„ç†
     static {
         TOP100_PERCENT = new Top();
         TOP100_PERCENT.setRowCount(100);
@@ -58,7 +58,7 @@ public class SqlServer {
     }
 
     /**
-     * ×ª»»Îª·ÖÒ³Óï¾ä
+     * è½¬æ¢ä¸ºåˆ†é¡µè¯­å¥
      *
      * @param sql
      * @param offset
@@ -68,17 +68,17 @@ public class SqlServer {
     public static String convertToPageSql(String sql, long offset, long limit) {
         String pageSql = CACHE.get(sql);
         if (pageSql == null) {
-            //½âÎöSQL
+            //è§£æSQL
             Statement stmt;
             try {
                 stmt = CCJSqlParserUtil.parse(sql);
             } catch (Throwable e) {
-                throw new RuntimeException("²»Ö§³Ö¸ÃSQL×ª»»Îª·ÖÒ³²éÑ¯!");
+                throw new RuntimeException("ä¸æ”¯æŒè¯¥SQLè½¬æ¢ä¸ºåˆ†é¡µæŸ¥è¯¢!");
             }
             if (!(stmt instanceof Select)) {
-                throw new RuntimeException("·ÖÒ³Óï¾ä±ØĞëÊÇSelect²éÑ¯!");
+                throw new RuntimeException("åˆ†é¡µè¯­å¥å¿…é¡»æ˜¯SelectæŸ¥è¯¢!");
             }
-            //»ñÈ¡·ÖÒ³²éÑ¯µÄselect
+            //è·å–åˆ†é¡µæŸ¥è¯¢çš„select
             Select pageSelect = getPageSelect((Select) stmt);
             pageSql = pageSelect.toString();
             CACHE.put(sql, pageSql);
@@ -89,7 +89,7 @@ public class SqlServer {
     }
 
     /**
-     * »ñÈ¡Ò»¸öÍâ²ã°ü×°µÄTOP²éÑ¯
+     * è·å–ä¸€ä¸ªå¤–å±‚åŒ…è£…çš„TOPæŸ¥è¯¢
      *
      * @param select
      * @return
@@ -99,38 +99,38 @@ public class SqlServer {
         if (selectBody instanceof SetOperationList) {
             selectBody = wrapSetOperationList((SetOperationList) selectBody);
         }
-        //ÕâÀïµÄselectBodyÒ»¶¨ÊÇPlainSelect
+        //è¿™é‡Œçš„selectBodyä¸€å®šæ˜¯PlainSelect
         if (((PlainSelect) selectBody).getTop() != null) {
-            throw new RuntimeException("±»·ÖÒ³µÄÓï¾äÒÑ¾­°üº¬ÁËTop£¬²»ÄÜÔÙÍ¨¹ı·ÖÒ³²å¼ş½øĞĞ·ÖÒ³²éÑ¯!");
+            throw new RuntimeException("è¢«åˆ†é¡µçš„è¯­å¥å·²ç»åŒ…å«äº†Topï¼Œä¸èƒ½å†é€šè¿‡åˆ†é¡µæ’ä»¶è¿›è¡Œåˆ†é¡µæŸ¥è¯¢!");
         }
-        //»ñÈ¡²éÑ¯ÁĞ
+        //è·å–æŸ¥è¯¢åˆ—
         List<SelectItem> selectItems = getSelectItems((PlainSelect) selectBody);
-        //¶ÔÒ»²ãµÄSQLÔö¼ÓROW_NUMBER()
+        //å¯¹ä¸€å±‚çš„SQLå¢åŠ ROW_NUMBER()
         addRowNumber((PlainSelect) selectBody);
-        //´¦Àí×ÓÓï¾äÖĞµÄorder by
+        //å¤„ç†å­è¯­å¥ä¸­çš„order by
         processSelectBody(selectBody, 0);
 
-        //ĞÂ½¨Ò»¸öselect
+        //æ–°å»ºä¸€ä¸ªselect
         Select newSelect = new Select();
         PlainSelect newSelectBody = new PlainSelect();
-        //ÉèÖÃtop
+        //è®¾ç½®top
         Top top = new Top();
         top.setRowCount(Long.MAX_VALUE);
         newSelectBody.setTop(top);
-        //ÉèÖÃorder by
+        //è®¾ç½®order by
         List<OrderByElement> orderByElements = new ArrayList<OrderByElement>();
         OrderByElement orderByElement = new OrderByElement();
         orderByElement.setExpression(PAGE_ROW_NUMBER_COLUMN);
         orderByElements.add(orderByElement);
         newSelectBody.setOrderByElements(orderByElements);
-        //ÉèÖÃwhere
+        //è®¾ç½®where
         GreaterThan greaterThan = new GreaterThan();
         greaterThan.setLeftExpression(PAGE_ROW_NUMBER_COLUMN);
         greaterThan.setRightExpression(new LongValue(Long.MIN_VALUE));
         newSelectBody.setWhere(greaterThan);
-        //ÉèÖÃselectItems
+        //è®¾ç½®selectItems
         newSelectBody.setSelectItems(selectItems);
-        //ÉèÖÃfromIterm
+        //è®¾ç½®fromIterm
         SubSelect fromItem = new SubSelect();
         fromItem.setSelectBody(selectBody);
         fromItem.setAlias(PAGE_TABLE_ALIAS);
@@ -144,20 +144,20 @@ public class SqlServer {
     }
 
     /**
-     * °ü×°SetOperationList
+     * åŒ…è£…SetOperationList
      *
      * @param setOperationList
      * @return
      */
     private static SelectBody wrapSetOperationList(SetOperationList setOperationList) {
-        //»ñÈ¡×îºóÒ»¸öplainSelect
+        //è·å–æœ€åä¸€ä¸ªplainSelect
         PlainSelect plainSelect = setOperationList.getPlainSelects().get(setOperationList.getPlainSelects().size() - 1);
 
         PlainSelect selectBody = new PlainSelect();
         List<SelectItem> selectItems = getSelectItems(plainSelect);
         selectBody.setSelectItems(selectItems);
 
-        //ÉèÖÃfromIterm
+        //è®¾ç½®fromIterm
         SubSelect fromItem = new SubSelect();
         fromItem.setSelectBody(setOperationList);
         fromItem.setAlias(new Alias(WRAP_TABLE));
@@ -171,20 +171,20 @@ public class SqlServer {
     }
 
     /**
-     * »ñÈ¡²éÑ¯ÁĞ
+     * è·å–æŸ¥è¯¢åˆ—
      *
      * @param plainSelect
      * @return
      */
     private static List<SelectItem> getSelectItems(PlainSelect plainSelect) {
-        //ÉèÖÃselectItems
+        //è®¾ç½®selectItems
         List<SelectItem> selectItems = new ArrayList<SelectItem>();
         for (SelectItem selectItem : plainSelect.getSelectItems()) {
-            //±ğÃûĞèÒªÌØÊâ´¦Àí
+            //åˆ«åéœ€è¦ç‰¹æ®Šå¤„ç†
             if (selectItem instanceof SelectExpressionItem) {
                 SelectExpressionItem selectExpressionItem = (SelectExpressionItem) selectItem;
                 if (selectExpressionItem.getAlias() != null) {
-                    //Ö±½ÓÊ¹ÓÃ±ğÃû
+                    //ç›´æ¥ä½¿ç”¨åˆ«å
                     Column column = new Column(selectExpressionItem.getAlias().getName());
                     SelectExpressionItem expressionItem = new SelectExpressionItem(column);
                     selectItems.add(expressionItem);
@@ -211,21 +211,21 @@ public class SqlServer {
     }
 
     /**
-     * ×îÍâ²ãµÄSQL²éÑ¯ĞèÒªÔö¼ÓROW_NUMBER()
+     * æœ€å¤–å±‚çš„SQLæŸ¥è¯¢éœ€è¦å¢åŠ ROW_NUMBER()
      *
      * @param plainSelect
      */
     private static void addRowNumber(PlainSelect plainSelect) {
-        //Ôö¼ÓROW_NUMBER()
+        //å¢åŠ ROW_NUMBER()
         StringBuilder orderByBuilder = new StringBuilder();
         orderByBuilder.append("ROW_NUMBER() OVER (");
         if (isNotEmptyList(plainSelect.getOrderByElements())) {
-            //×¢Òâ£ºorder by±ğÃûµÄÊ±ºòÓĞ´í,ÓÉÓÚÃ»·¨ÅĞ¶ÏÒ»¸öÁĞÊÇ·ñÎª±ğÃû£¬ËùÒÔ²»ÄÜ½â¾ö
+            //æ³¨æ„ï¼šorder byåˆ«åçš„æ—¶å€™æœ‰é”™,ç”±äºæ²¡æ³•åˆ¤æ–­ä¸€ä¸ªåˆ—æ˜¯å¦ä¸ºåˆ«åï¼Œæ‰€ä»¥ä¸èƒ½è§£å†³
             orderByBuilder.append(PlainSelect.orderByToString(false, plainSelect.getOrderByElements()));
         } else {
-            throw new RuntimeException("ÇëÄúÔÚsqlÖĞ°üº¬order byÓï¾ä!");
+            throw new RuntimeException("è¯·æ‚¨åœ¨sqlä¸­åŒ…å«order byè¯­å¥!");
         }
-        //ĞèÒª°Ñ¸ÄorderbyÇå¿Õ
+        //éœ€è¦æŠŠæ”¹orderbyæ¸…ç©º
         if (isNotEmptyList(plainSelect.getOrderByElements())) {
             plainSelect.setOrderByElements(null);
         }
@@ -236,7 +236,7 @@ public class SqlServer {
     }
 
     /**
-     * ´¦ÀíselectBodyÈ¥³ıOrder by
+     * å¤„ç†selectBodyå»é™¤Order by
      *
      * @param selectBody
      */
@@ -260,7 +260,7 @@ public class SqlServer {
     }
 
     /**
-     * ´¦ÀíPlainSelectÀàĞÍµÄselectBody
+     * å¤„ç†PlainSelectç±»å‹çš„selectBody
      *
      * @param plainSelect
      */
@@ -286,7 +286,7 @@ public class SqlServer {
     }
 
     /**
-     * ´¦Àí×Ó²éÑ¯
+     * å¤„ç†å­æŸ¥è¯¢
      *
      * @param fromItem
      */
@@ -317,11 +317,11 @@ public class SqlServer {
                 }
             }
         }
-        //TableÊ±²»ÓÃ´¦Àí
+        //Tableæ—¶ä¸ç”¨å¤„ç†
     }
 
     /**
-     * List²»¿Õ
+     * Listä¸ç©º
      *
      * @param list
      * @return
@@ -334,7 +334,7 @@ public class SqlServer {
     }
 
     /**
-     * ×Ö·û´®²»¿Õ
+     * å­—ç¬¦ä¸²ä¸ç©º
      *
      * @param str
      * @return
@@ -353,4 +353,3 @@ public class SqlServer {
 		System.out.println( SqlServer.convertToPageSql(sql, (page.getPageNo() - 1) * page.getPageSize(), page.getPageSize()) );
 	}
 }
-

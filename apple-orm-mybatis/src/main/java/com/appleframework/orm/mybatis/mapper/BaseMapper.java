@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 /**
- * Dao¶¥²ã½Ó¿Ú
+ * Daoé¡¶å±‚æ¥å£
  * 
  * @author cruise.xu
  * @since 2015-10-17
@@ -36,4 +36,3 @@ public interface BaseMapper  {
     <T> int updateByPrimaryKey(T record);
 
 }
-

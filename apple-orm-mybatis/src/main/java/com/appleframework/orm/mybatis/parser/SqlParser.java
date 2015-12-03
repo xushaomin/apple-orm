@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * sql½âÎöÀà£¬Ìá¹©¸üÖÇÄÜµÄcount²éÑ¯sql
+ * sqlè§£æç±»ï¼Œæä¾›æ›´æ™ºèƒ½çš„countæŸ¥è¯¢sql
  *
  * @author liuzh
  */
@@ -30,44 +30,44 @@ public class SqlParser {
         TABLE_ALIAS.setUseAs(false);
     }
 
-    //»º´æÒÑ¾­ĞŞ¸Ä¹ıµÄsql
+    //ç¼“å­˜å·²ç»ä¿®æ”¹è¿‡çš„sql
     private static Map<String, String> CACHE = new ConcurrentHashMap<String, String>();
 
     public static void isSupportedSql(String sql) {
         if (sql.trim().toUpperCase().endsWith("FOR UPDATE")) {
-            throw new RuntimeException("·ÖÒ³²å¼ş²»Ö§³Ö°üº¬for updateµÄsql");
+            throw new RuntimeException("åˆ†é¡µæ’ä»¶ä¸æ”¯æŒåŒ…å«for updateçš„sql");
         }
     }
 
     /**
-     * »ñÈ¡ÖÇÄÜµÄcountSql
+     * è·å–æ™ºèƒ½çš„countSql
      *
      * @param sql
      * @return
      */
     public static String getSmartCountSql(String sql) {
-        //Ğ£ÑéÊÇ·ñÖ§³Ö¸Ãsql
+        //æ ¡éªŒæ˜¯å¦æ”¯æŒè¯¥sql
         isSupportedSql(sql);
         if (CACHE.get(sql) != null) {
             return CACHE.get(sql);
         }
-        //½âÎöSQL
+        //è§£æSQL
         Statement stmt = null;
         try {
             stmt = CCJSqlParserUtil.parse(sql);
         } catch (Throwable e) {
-            //ÎŞ·¨½âÎöµÄÓÃÒ»°ã·½·¨·µ»ØcountÓï¾ä
+            //æ— æ³•è§£æçš„ç”¨ä¸€èˆ¬æ–¹æ³•è¿”å›countè¯­å¥
             String countSql = getSimpleCountSql(sql);
             CACHE.put(sql, countSql);
             return countSql;
         }
         Select select = (Select) stmt;
         SelectBody selectBody = select.getSelectBody();
-        //´¦Àíbody-È¥order by
+        //å¤„ç†body-å»order by
         processSelectBody(selectBody);
-        //´¦Àíwith-È¥order by
+        //å¤„ç†with-å»order by
         processWithItemsList(select.getWithItemsList());
-        //´¦ÀíÎªcount²éÑ¯
+        //å¤„ç†ä¸ºcountæŸ¥è¯¢
         sqlToCount(select);
         String result = select.toString();
         CACHE.put(sql, result);
@@ -75,10 +75,10 @@ public class SqlParser {
     }
 
     /**
-     * »ñÈ¡ÆÕÍ¨µÄCount-sql
+     * è·å–æ™®é€šçš„Count-sql
      *
-     * @param sql Ô­²éÑ¯sql
-     * @return ·µ»Øcount²éÑ¯sql
+     * @param sql åŸæŸ¥è¯¢sql
+     * @return è¿”å›countæŸ¥è¯¢sql
      */
     public static String getSimpleCountSql(final String sql) {
         isSupportedSql(sql);
@@ -90,13 +90,13 @@ public class SqlParser {
     }
 
     /**
-     * ½«sql×ª»»Îªcount²éÑ¯
+     * å°†sqlè½¬æ¢ä¸ºcountæŸ¥è¯¢
      *
      * @param select
      */
     public static void sqlToCount(Select select) {
         SelectBody selectBody = select.getSelectBody();
-        // ÊÇ·ñÄÜ¼ò»¯count²éÑ¯
+        // æ˜¯å¦èƒ½ç®€åŒ–countæŸ¥è¯¢
         if (selectBody instanceof PlainSelect && isSimpleCount((PlainSelect) selectBody)) {
             ((PlainSelect) selectBody).setSelectItems(COUNT_ITEM);
         } else {
@@ -111,26 +111,26 @@ public class SqlParser {
     }
 
     /**
-     * ÊÇ·ñ¿ÉÒÔÓÃ¼òµ¥µÄcount²éÑ¯·½Ê½
+     * æ˜¯å¦å¯ä»¥ç”¨ç®€å•çš„countæŸ¥è¯¢æ–¹å¼
      *
      * @param select
      * @return
      */
     public static boolean isSimpleCount(PlainSelect select) {
-        //°üº¬group byµÄÊ±ºò²»¿ÉÒÔ
+        //åŒ…å«group byçš„æ—¶å€™ä¸å¯ä»¥
         if (select.getGroupByColumnReferences() != null) {
             return false;
         }
-        //°üº¬distinctµÄÊ±ºò²»¿ÉÒÔ
+        //åŒ…å«distinctçš„æ—¶å€™ä¸å¯ä»¥
         if (select.getDistinct() != null) {
             return false;
         }
         for (SelectItem item : select.getSelectItems()) {
-            //selectÁĞÖĞ°üº¬²ÎÊıµÄÊ±ºò²»¿ÉÒÔ£¬·ñÔò»áÒıÆğ²ÎÊı¸öÊı´íÎó
+            //selectåˆ—ä¸­åŒ…å«å‚æ•°çš„æ—¶å€™ä¸å¯ä»¥ï¼Œå¦åˆ™ä¼šå¼•èµ·å‚æ•°ä¸ªæ•°é”™è¯¯
             if (item.toString().contains("?")) {
                 return false;
             }
-            //Èç¹û²éÑ¯ÁĞÖĞ°üº¬º¯Êı£¬Ò²²»¿ÉÒÔ£¬º¯Êı¿ÉÄÜ»á¾ÛºÏÁĞ
+            //å¦‚æœæŸ¥è¯¢åˆ—ä¸­åŒ…å«å‡½æ•°ï¼Œä¹Ÿä¸å¯ä»¥ï¼Œå‡½æ•°å¯èƒ½ä¼šèšåˆåˆ—
             if (item instanceof SelectExpressionItem) {
                 if (((SelectExpressionItem) item).getExpression() instanceof Function) {
                     return false;
@@ -141,7 +141,7 @@ public class SqlParser {
     }
 
     /**
-     * ´¦ÀíselectBodyÈ¥³ıOrder by
+     * å¤„ç†selectBodyå»é™¤Order by
      *
      * @param selectBody
      */
@@ -168,7 +168,7 @@ public class SqlParser {
     }
 
     /**
-     * ´¦ÀíPlainSelectÀàĞÍµÄselectBody
+     * å¤„ç†PlainSelectç±»å‹çš„selectBody
      *
      * @param plainSelect
      */
@@ -190,7 +190,7 @@ public class SqlParser {
     }
 
     /**
-     * ´¦ÀíWithItem
+     * å¤„ç†WithItem
      *
      * @param withItemsList
      */
@@ -203,7 +203,7 @@ public class SqlParser {
     }
 
     /**
-     * ´¦Àí×Ó²éÑ¯
+     * å¤„ç†å­æŸ¥è¯¢
      *
      * @param fromItem
      */
@@ -234,11 +234,11 @@ public class SqlParser {
                 }
             }
         }
-        //TableÊ±²»ÓÃ´¦Àí
+        //Tableæ—¶ä¸ç”¨å¤„ç†
     }
 
     /**
-     * ÅĞ¶ÏOrderbyÊÇ·ñ°üº¬²ÎÊı£¬ÓĞ²ÎÊıµÄ²»ÄÜÈ¥
+     * åˆ¤æ–­Orderbyæ˜¯å¦åŒ…å«å‚æ•°ï¼Œæœ‰å‚æ•°çš„ä¸èƒ½å»
      *
      * @param orderByElements
      * @return
@@ -261,4 +261,3 @@ public class SqlParser {
 		System.out.println( SqlParser.getSmartCountSql(sql) );
 	}
 }
-
