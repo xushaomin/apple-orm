@@ -5,7 +5,7 @@
 
 	<groupId>com.appleframework.orm</groupId>
 	<artifactId>apple-orm</artifactId>
-	<version>0.0.9.RELEASE</version>
+	<version>0.1.0.RELEASE</version>
 	<packaging>pom</packaging>
 
 	<name>apple-orm</name>
@@ -16,7 +16,7 @@
 		<hibernate.version>4.1.7.Final</hibernate.version>
 		<hibernate.validator.version>4.1.0.Final</hibernate.validator.version>
 		<hibernate.jpamodelgen.version>1.1.1.Final</hibernate.jpamodelgen.version>
-		<spring.version>4.0.5.RELEASE</spring.version>
+		<spring.version>4.2.0.RELEASE</spring.version>
 		<commons.lang.version>2.4</commons.lang.version>
 		<commons.lang3.version>3.1</commons.lang3.version>
 		<commons.beanutils.version>1.7.0</commons.beanutils.version>
@@ -34,7 +34,7 @@
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>4.8.1</version>
+				<version>4.12</version>
 				<scope>test</scope>
 			</dependency>
 
@@ -102,31 +102,37 @@
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-aop</artifactId>
 				<version>${spring.version}</version>
+				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-beans</artifactId>
 				<version>${spring.version}</version>
+				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-core</artifactId>
 				<version>${spring.version}</version>
+				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-context</artifactId>
 				<version>${spring.version}</version>
+				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-context-support</artifactId>
 				<version>${spring.version}</version>
+				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-tx</artifactId>
 				<version>${spring.version}</version>
+				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
@@ -138,37 +144,44 @@
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-orm</artifactId>
 				<version>${spring.version}</version>
+				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-web</artifactId>
 				<version>${spring.version}</version>
+				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-webmvc</artifactId>
 				<version>${spring.version}</version>
+				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-jms</artifactId>
 				<version>${spring.version}</version>
+				<scope>provided</scope>
 			</dependency>
 
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-expression</artifactId>
 				<version>${spring.version}</version>
+				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-jdbc</artifactId>
 				<version>${spring.version}</version>
+				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-oxm</artifactId>
 				<version>${spring.version}</version>
+				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>commons-lang</groupId>
