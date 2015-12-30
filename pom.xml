@@ -22,8 +22,8 @@
 		<commons.beanutils.version>1.7.0</commons.beanutils.version>
 		<mysql.version>5.1.33</mysql.version>
 		<apple.version>0.1.4.RELEASE</apple.version>
-		<mybatis.version>3.2.2</mybatis.version>
-		<mybatis.spring.version>1.2.0</mybatis.spring.version>
+		<mybatis.version>3.3.0</mybatis.version>
+		<mybatis.spring.version>1.2.3</mybatis.spring.version>
 	</properties>
 
 	<dependencyManagement>
@@ -215,6 +215,7 @@
 				<groupId>com.appleframework</groupId>
 				<artifactId>apple-model</artifactId>
 				<version>${apple.version}</version>
+				<scope>provided</scope>
 			</dependency>
 
 			<!-- mybaties -->
