@@ -70,6 +70,7 @@ public class PaginationInterceptor implements Interceptor {
 		// 获得查询对象
 		Object parameterObject = boundSql.getParameterObject();
 		Pagination page = null;
+		boolean isCountCache = false;
 		
 		// 根据参数类型判断是否是分页方法
 		if (parameterObject instanceof PageQuery) {
@@ -79,6 +80,7 @@ public class PaginationInterceptor implements Interceptor {
 			// 查询条件Map
 			//Map<String, Object> conditions = query.getQueryParams();
 			page = query.getDefaultPage();
+			isCountCache = query.getAsBoolean("isCountCache");
 		}
 
 		else if(parameterObject instanceof Map) {
@@ -86,6 +88,7 @@ public class PaginationInterceptor implements Interceptor {
 			Map<String, Object> query = (Map<String, Object>) parameterObject;
 			try {
 				page = (Pagination)query.get("page");
+				isCountCache = (Boolean)query.get("isCountCache");
 			} catch (BindingException e) {
 				page = null;
 			}
@@ -124,7 +127,12 @@ public class PaginationInterceptor implements Interceptor {
 			countSql = SqlParser.getSmartCountSql(sql);
 		}
 		else {
-			countSql = SqlParser.getSimpleCountSql(sql);
+			if(isCountCache) {
+				countSql = SqlParser.getCacheCountSql(sql);
+			}
+			else {
+				countSql = SqlParser.getSimpleCountSql(sql);
+			}
 		}
 		
 		PreparedStatement countStmt = connection.prepareStatement(countSql);

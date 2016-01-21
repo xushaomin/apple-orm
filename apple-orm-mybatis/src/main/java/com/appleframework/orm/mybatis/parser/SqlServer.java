@@ -347,7 +347,7 @@ public class SqlServer {
     }*/
     
     public static void main(String[] args) {
-		String sql = "select * from c_contacts where is_delete=0";
+		String sql = "select * from c_contacts where is_delete=0 order by id asc";
 		//SqlServer s = new SqlServer();
 		Pagination page = new Pagination(3, 100);
 		System.out.println( SqlServer.convertToPageSql(sql, (page.getPageNo() - 1) * page.getPageSize(), page.getPageSize()) );
