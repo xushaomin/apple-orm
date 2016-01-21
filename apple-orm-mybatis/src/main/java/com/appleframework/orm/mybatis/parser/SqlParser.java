@@ -19,6 +19,8 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class SqlParser {
 	
+	public static final String MYSQL_CACHE_CHAR = "/*!SQL_CACHE */";
+	
     private static final List<SelectItem> COUNT_ITEM;
     private static final Alias TABLE_ALIAS;
 
@@ -84,6 +86,23 @@ public class SqlParser {
         isSupportedSql(sql);
         StringBuilder stringBuilder = new StringBuilder(sql.length() + 40);
         stringBuilder.append("select count(*) from (");
+        stringBuilder.append(sql);
+        stringBuilder.append(") tmp_count");
+        return stringBuilder.toString();
+    }
+    
+    /**
+     * 获取普通的Count-sql
+     *
+     * @param sql 原查询sql
+     * @return 返回count查询sql
+     */
+    public static String getCacheCountSql(final String sql) {
+        isSupportedSql(sql);
+        StringBuilder stringBuilder = new StringBuilder(sql.length() + 40);
+        stringBuilder.append("select ");
+        stringBuilder.append(MYSQL_CACHE_CHAR);
+        stringBuilder.append(" count(*) from (");
         stringBuilder.append(sql);
         stringBuilder.append(") tmp_count");
         return stringBuilder.toString();
@@ -259,5 +278,6 @@ public class SqlParser {
 		String sql = "select * from c_contacts where is_delete=0 order by company_id asc ";
 		System.out.println( SqlParser.getSimpleCountSql(sql) );
 		System.out.println( SqlParser.getSmartCountSql(sql) );
+		System.out.println( SqlParser.getCacheCountSql(sql) );
 	}
 }
