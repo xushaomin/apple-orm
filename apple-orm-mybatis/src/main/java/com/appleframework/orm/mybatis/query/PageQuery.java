@@ -80,6 +80,21 @@ public class PageQuery extends HashMap<String, Object> implements Query {
 		else
 			return null;
 	}
+	
+	/**
+	 * 以Boolean类型返回键值
+	 * 
+	 * @param key
+	 *            键名
+	 * @return Boolean 键值
+	 */
+	public Boolean getAsBoolean(String key) {
+		Object obj = TypeCaseHelper.convert(get(key), "Boolean", null);
+		if (obj != null)
+			return (Boolean) obj;
+		else
+			return null;
+	}
 
 	/**
 	 * 以String类型返回键值
