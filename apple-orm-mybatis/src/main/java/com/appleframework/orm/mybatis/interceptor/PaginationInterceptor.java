@@ -80,7 +80,7 @@ public class PaginationInterceptor implements Interceptor {
 			// 查询条件Map
 			//Map<String, Object> conditions = query.getQueryParams();
 			page = query.getDefaultPage();
-			isCountCache = query.getAsBoolean("isCountCache");
+			isCountCache = page.isCountCache();
 		}
 
 		else if(parameterObject instanceof Map) {
@@ -88,7 +88,7 @@ public class PaginationInterceptor implements Interceptor {
 			Map<String, Object> query = (Map<String, Object>) parameterObject;
 			try {
 				page = (Pagination)query.get("page");
-				isCountCache = (Boolean)query.get("isCountCache");
+				isCountCache = page.isCountCache();
 			} catch (BindingException e) {
 				page = null;
 			}
