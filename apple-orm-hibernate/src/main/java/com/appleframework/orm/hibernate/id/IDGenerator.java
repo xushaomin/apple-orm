@@ -17,6 +17,7 @@ import org.hibernate.id.Configurable;
 import org.hibernate.id.IdentifierGenerationException;
 import org.hibernate.id.IdentifierGenerator;
 import org.hibernate.id.PersistentIdentifierGenerator;
+import org.hibernate.service.ServiceRegistry;
 import org.hibernate.type.Type;
 
 /**
@@ -110,5 +111,11 @@ public class IDGenerator implements IdentifierGenerator, Configurable {
 		} else {
 			throw new IdentifierGenerationException("this id generator generates long, integer, short");
 		}
+	}
+
+	@Override
+	public void configure(Type arg0, Properties arg1, ServiceRegistry arg2) throws MappingException {
+		// TODO Auto-generated method stub
+		
 	}
 }
