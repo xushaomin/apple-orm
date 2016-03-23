@@ -88,7 +88,8 @@ public class PaginationInterceptor implements Interceptor {
 			Map<String, Object> query = (Map<String, Object>) parameterObject;
 			try {
 				page = (Pagination)query.get("page");
-				isCountCache = page.isCountCache();
+				if(null != page)
+					isCountCache = page.isCountCache();
 			} catch (BindingException e) {
 				page = null;
 			}
