@@ -70,17 +70,11 @@ public class PaginationInterceptor implements Interceptor {
 		// 获得查询对象
 		Object parameterObject = boundSql.getParameterObject();
 		Pagination page = null;
-		boolean isCountCache = false;
 		
 		// 根据参数类型判断是否是分页方法
 		if (parameterObject instanceof PageQuery) {
 			PageQuery query = (PageQuery) parameterObject;
-			// 查询参数对象
-			
-			// 查询条件Map
-			//Map<String, Object> conditions = query.getQueryParams();
 			page = query.getDefaultPage();
-			isCountCache = page.isCountCache();
 		}
 
 		else if(parameterObject instanceof Map) {
@@ -88,8 +82,6 @@ public class PaginationInterceptor implements Interceptor {
 			Map<String, Object> query = (Map<String, Object>) parameterObject;
 			try {
 				page = (Pagination)query.get("page");
-				if(null != page)
-					isCountCache = page.isCountCache();
 			} catch (BindingException e) {
 				page = null;
 			}
@@ -103,24 +95,6 @@ public class PaginationInterceptor implements Interceptor {
 		Connection connection = (Connection) ivk.getArgs()[0];
 		String sql = boundSql.getSql();
 		
-		// 拼装查询条件
-		/*if (conditions != null) {
-			Set<String> keys = conditions.keySet();
-			Object value = null;
-			StringBuffer sb = new StringBuffer();
-			boolean first = true;
-			for (String key : keys) {
-				value = conditions.get(key);
-				if (first) {
-					sb.append(" where ").append(key).append("=").append(value);
-					first = !first;
-				} else {
-					sb.append(" and ").append(key).append("=").append(value);
-				}
-			}
-			sql += sb.toString();
-		}*/
-
 		// 获取查询数来的总数目
 		//String countSql = "SELECT COUNT(0) FROM (" + sql + ") AS tmp ";
 		String countSql = null;
@@ -128,12 +102,7 @@ public class PaginationInterceptor implements Interceptor {
 			countSql = SqlParser.getSmartCountSql(sql);
 		}
 		else {
-			if(isCountCache) {
-				countSql = SqlParser.getCacheCountSql(sql);
-			}
-			else {
-				countSql = SqlParser.getSimpleCountSql(sql);
-			}
+			countSql = SqlParser.getSimpleCountSql(sql);
 		}
 		
 		PreparedStatement countStmt = connection.prepareStatement(countSql);
@@ -151,6 +120,7 @@ public class PaginationInterceptor implements Interceptor {
 		// 设置总记录数
 		page.setTotalCount(count);
 		page.adjustPageNo();
+		
 		// 设置总页数
 		//page.setTotalPage((count + page.getPageSize() - 1) / page.getPageSize());
 		// 放到作用于
