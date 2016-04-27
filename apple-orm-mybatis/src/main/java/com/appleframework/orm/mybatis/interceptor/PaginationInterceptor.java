@@ -55,6 +55,7 @@ public class PaginationInterceptor implements Interceptor {
 	// 暂时不需要这个参数，现在根据参数类型来判断是否是分页sql
 	// private String pageMethodPattern = "";
 
+	@SuppressWarnings("unchecked")
 	public Object intercept(Invocation ivk) throws Throwable {
 		if (!(ivk.getTarget() instanceof RoutingStatementHandler)) {
 			return ivk.proceed();
@@ -78,7 +79,6 @@ public class PaginationInterceptor implements Interceptor {
 		}
 
 		else if(parameterObject instanceof Map) {
-			@SuppressWarnings("unchecked")
 			Map<String, Object> query = (Map<String, Object>) parameterObject;
 			try {
 				page = (Pagination)query.get("page");
@@ -108,6 +108,14 @@ public class PaginationInterceptor implements Interceptor {
 		PreparedStatement countStmt = connection.prepareStatement(countSql);
 		BoundSql countBS = new BoundSql(mappedStatement.getConfiguration(),
 				countSql, boundSql.getParameterMappings(), parameterObject);
+		
+		//解决foreach不能分页问题
+		Map<String, Object> additionalParameters = 
+			(Map<String, Object>) SystemUtility.getValueByFieldName(boundSql, "additionalParameters");
+		MetaObject metaParameters = (MetaObject) SystemUtility.getValueByFieldName(boundSql, "metaParameters");
+		SystemUtility.setValueByFieldName(countBS, "additionalParameters", additionalParameters);
+		SystemUtility.setValueByFieldName(countBS, "metaParameters", metaParameters);
+
 		setParameters(countStmt, mappedStatement, countBS, parameterObject);
 		ResultSet rs = countStmt.executeQuery();
 		int count = 0;
