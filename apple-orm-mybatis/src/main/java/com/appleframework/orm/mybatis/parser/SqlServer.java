@@ -150,8 +150,9 @@ public class SqlServer {
      * @return
      */
     private static SelectBody wrapSetOperationList(SetOperationList setOperationList) {
-        //获取最后一个plainSelect
-        PlainSelect plainSelect = setOperationList.getPlainSelects().get(setOperationList.getPlainSelects().size() - 1);
+		// 获取最后一个plainSelect
+		PlainSelect plainSelect = (PlainSelect) 
+				setOperationList.getSelects().get(setOperationList.getSelects().size() - 1);
 
         PlainSelect selectBody = new PlainSelect();
         List<SelectItem> selectItems = getSelectItems(plainSelect);
@@ -241,23 +242,22 @@ public class SqlServer {
      * @param selectBody
      */
     private static void processSelectBody(SelectBody selectBody, int level) {
-        if (selectBody instanceof PlainSelect) {
-            processPlainSelect((PlainSelect) selectBody, level + 1);
-        } else if (selectBody instanceof WithItem) {
-            WithItem withItem = (WithItem) selectBody;
-            if (withItem.getSelectBody() != null) {
-                processSelectBody(withItem.getSelectBody(), level + 1);
-            }
-        } else {
-            SetOperationList operationList = (SetOperationList) selectBody;
-            if (operationList.getPlainSelects() != null && operationList.getPlainSelects().size() > 0) {
-                List<PlainSelect> plainSelects = operationList.getPlainSelects();
-                for (PlainSelect plainSelect : plainSelects) {
-                    processPlainSelect(plainSelect, level + 1);
-                }
-            }
-        }
-    }
+		if (selectBody instanceof PlainSelect) {
+			processPlainSelect((PlainSelect) selectBody, level + 1);
+		} else if (selectBody instanceof WithItem) {
+			WithItem withItem = (WithItem) selectBody;
+			if (withItem.getSelectBody() != null) {
+				processSelectBody(withItem.getSelectBody(), level + 1);
+			}
+		} else {
+			SetOperationList operationList = (SetOperationList) selectBody;
+			if (operationList.getSelects() != null && operationList.getSelects().size() > 0) {
+				List<SelectBody> selects = operationList.getSelects();
+				for (SelectBody select : selects) {
+					processSelectBody(select, level + 1);
+				}
+			}
+		}}
 
     /**
      * 处理PlainSelect类型的selectBody

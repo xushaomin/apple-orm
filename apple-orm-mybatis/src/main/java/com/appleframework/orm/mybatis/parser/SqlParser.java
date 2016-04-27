@@ -165,25 +165,25 @@ public class SqlParser {
      * @param selectBody
      */
     public static void processSelectBody(SelectBody selectBody) {
-        if (selectBody instanceof PlainSelect) {
-            processPlainSelect((PlainSelect) selectBody);
-        } else if (selectBody instanceof WithItem) {
-            WithItem withItem = (WithItem) selectBody;
-            if (withItem.getSelectBody() != null) {
-                processSelectBody(withItem.getSelectBody());
-            }
-        } else {
-            SetOperationList operationList = (SetOperationList) selectBody;
-            if (operationList.getPlainSelects() != null && operationList.getPlainSelects().size() > 0) {
-                List<PlainSelect> plainSelects = operationList.getPlainSelects();
-                for (PlainSelect plainSelect : plainSelects) {
-                    processPlainSelect(plainSelect);
-                }
-            }
-            if (!orderByHashParameters(operationList.getOrderByElements())) {
-                operationList.setOrderByElements(null);
-            }
-        }
+    	if (selectBody instanceof PlainSelect) {
+			processPlainSelect((PlainSelect) selectBody);
+		} else if (selectBody instanceof WithItem) {
+			WithItem withItem = (WithItem) selectBody;
+			if (withItem.getSelectBody() != null) {
+				processSelectBody(withItem.getSelectBody());
+			}
+		} else {
+			SetOperationList operationList = (SetOperationList) selectBody;
+			if (operationList.getSelects() != null && operationList.getSelects().size() > 0) {
+				List<SelectBody> selectBodys = operationList.getSelects();
+				for (SelectBody select : selectBodys) {
+					processSelectBody(select);
+				}
+			}
+			if (!orderByHashParameters(operationList.getOrderByElements())) {
+				operationList.setOrderByElements(null);
+			}
+		}
     }
 
     /**
