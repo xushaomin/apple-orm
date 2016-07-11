@@ -58,8 +58,8 @@ public class OrderByParser {
             }
         } else {
             SetOperationList operationList = (SetOperationList) selectBody;
-            if (operationList.getPlainSelects() != null && operationList.getPlainSelects().size() > 0) {
-                List<PlainSelect> plainSelects = operationList.getPlainSelects();
+            if (operationList.getSelects() != null && operationList.getSelects().size() > 0) {
+                List<SelectBody> plainSelects = operationList.getSelects();
                 return extraOrderBy(plainSelects.get(plainSelects.size() - 1));
             }
         }

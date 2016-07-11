@@ -42,7 +42,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author liuzh
  */
 public class SqlParser {
-	
     private static final List<SelectItem> COUNT_ITEM;
     private static final Alias TABLE_ALIAS;
 
@@ -179,10 +178,10 @@ public class SqlParser {
             }
         } else {
             SetOperationList operationList = (SetOperationList) selectBody;
-            if (operationList.getPlainSelects() != null && operationList.getPlainSelects().size() > 0) {
-                List<PlainSelect> plainSelects = operationList.getPlainSelects();
-                for (PlainSelect plainSelect : plainSelects) {
-                    processPlainSelect(plainSelect);
+            if (operationList.getSelects() != null && operationList.getSelects().size() > 0) {
+                List<SelectBody> plainSelects = operationList.getSelects();
+                for (SelectBody plainSelect : plainSelects) {
+                    processSelectBody(plainSelect);
                 }
             }
             if (!orderByHashParameters(operationList.getOrderByElements())) {

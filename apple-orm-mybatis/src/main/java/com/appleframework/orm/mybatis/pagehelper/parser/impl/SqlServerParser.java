@@ -24,14 +24,14 @@
 
 package com.appleframework.orm.mybatis.pagehelper.parser.impl;
 
-import com.appleframework.orm.mybatis.pagehelper.Page;
-import com.appleframework.orm.mybatis.pagehelper.SqlUtil;
-import com.appleframework.orm.mybatis.pagehelper.parser.SqlServer;
-
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.session.Configuration;
+
+import com.appleframework.orm.mybatis.pagehelper.Page;
+import com.appleframework.orm.mybatis.pagehelper.SqlUtil;
+import com.appleframework.orm.mybatis.pagehelper.parser.SqlServer;
 
 import java.util.List;
 import java.util.Map;
@@ -40,6 +40,7 @@ import java.util.Map;
  * @author liuzh
  */
 public class SqlServerParser extends AbstractParser {
+	
     private static final SqlServer pageSql = new SqlServer();
 
     //with(nolock)
