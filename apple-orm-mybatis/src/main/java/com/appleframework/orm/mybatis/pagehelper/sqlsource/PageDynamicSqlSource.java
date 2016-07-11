@@ -61,7 +61,7 @@ public class PageDynamicSqlSource extends PageSqlSource implements Constant {
         SqlSource sqlSource = sqlSourceParser.parse(context.getSql(), parameterType, context.getBindings());
         sqlSource = new OrderByStaticSqlSource((StaticSqlSource) sqlSource);
         BoundSql boundSql = sqlSource.getBoundSql(parameterObject);
-        //ÉèÖÃÌõ¼ş²ÎÊı
+        //è®¾ç½®æ¡ä»¶å‚æ•°
         for (Map.Entry<String, Object> entry : context.getBindings().entrySet()) {
             boundSql.setAdditionalParameter(entry.getKey(), entry.getValue());
         }
@@ -78,7 +78,7 @@ public class PageDynamicSqlSource extends PageSqlSource implements Constant {
         BoundSql boundSql = sqlSource.getBoundSql(parameterObject);
         sqlSource = new StaticSqlSource(configuration, localParser.get().getCountSql(boundSql.getSql()), boundSql.getParameterMappings());
         boundSql = sqlSource.getBoundSql(parameterObject);
-        //ÉèÖÃÌõ¼ş²ÎÊı
+        //è®¾ç½®æ¡ä»¶å‚æ•°
         for (Map.Entry<String, Object> entry : context.getBindings().entrySet()) {
             boundSql.setAdditionalParameter(entry.getKey(), entry.getValue());
         }
@@ -89,9 +89,9 @@ public class PageDynamicSqlSource extends PageSqlSource implements Constant {
     @Override
     protected BoundSql getPageBoundSql(Object parameterObject) {
         DynamicContext context;
-        //ÓÉÓÚÔö¼Ó·ÖÒ³²ÎÊıºó»áĞŞ¸ÄparameterObjectµÄÖµ£¬Òò´ËÔÚÇ°Ãæ´¦ÀíÊ±±¸·İ¸ÃÖµ
-        //Èç¹û·¢ÏÖ²ÎÊıÊÇMap²¢ÇÒ°üº¬¸ÃKEY£¬¾ÍÊ¹ÓÃ±¸·İµÄ¸ÃÖµ
-        //½â¾öbug#25:http://git.oschina.net/free/Mybatis_PageHelper/issues/25
+        //ç”±äºå¢åŠ åˆ†é¡µå‚æ•°åä¼šä¿®æ”¹parameterObjectçš„å€¼ï¼Œå› æ­¤åœ¨å‰é¢å¤„ç†æ—¶å¤‡ä»½è¯¥å€¼
+        //å¦‚æœå‘ç°å‚æ•°æ˜¯Mapå¹¶ä¸”åŒ…å«è¯¥KEYï¼Œå°±ä½¿ç”¨å¤‡ä»½çš„è¯¥å€¼
+        //è§£å†³bug#25:http://git.oschina.net/free/Mybatis_PageHelper/issues/25
         if (parameterObject != null
                 && parameterObject instanceof Map
                 && ((Map) parameterObject).containsKey(ORIGINAL_PARAMETER_OBJECT)) {
@@ -107,7 +107,7 @@ public class PageDynamicSqlSource extends PageSqlSource implements Constant {
         BoundSql boundSql = sqlSource.getBoundSql(parameterObject);
         sqlSource = new StaticSqlSource(configuration, localParser.get().getPageSql(boundSql.getSql()), localParser.get().getPageParameterMapping(configuration, boundSql));
         boundSql = sqlSource.getBoundSql(parameterObject);
-        //ÉèÖÃÌõ¼ş²ÎÊı
+        //è®¾ç½®æ¡ä»¶å‚æ•°
         for (Map.Entry<String, Object> entry : context.getBindings().entrySet()) {
             boundSql.setAdditionalParameter(entry.getKey(), entry.getValue());
         }

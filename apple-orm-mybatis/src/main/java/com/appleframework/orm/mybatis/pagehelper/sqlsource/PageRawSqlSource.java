@@ -7,7 +7,7 @@ import org.apache.ibatis.reflection.SystemMetaObject;
 import org.apache.ibatis.scripting.defaults.RawSqlSource;
 
 /**
- * ÃèÊöĞÅÏ¢
+ * æè¿°ä¿¡æ¯
  *
  * @author liuzh
  * @since 2015-06-26

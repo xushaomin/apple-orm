@@ -60,10 +60,10 @@ public class PageProviderSqlSource extends PageSqlSource implements Constant {
         this.providerMethod = (Method) metaObject.getValue("providerMethod");
         this.configuration = (Configuration) metaObject.getValue("sqlSourceParser.configuration");
         try {
-            //ÏÈÕë¶Ô3.3.1ºÍÖ®Ç°°æ±¾×öÅĞ¶Ï
+            //å…ˆé’ˆå¯¹3.3.1å’Œä¹‹å‰ç‰ˆæœ¬åšåˆ¤æ–­
             this.providerTakesParameterObject = (Boolean) metaObject.getValue("providerTakesParameterObject");
         } catch (ReflectionException e) {
-            //3.4.0+°æ±¾£¬½â¾ö#102 by Ian Lim
+            //3.4.0+ç‰ˆæœ¬ï¼Œè§£å†³#102 by Ian Lim
             providerMethodArgumentNames = (String[]) metaObject.getValue("providerMethodArgumentNames");
         }
     }
@@ -77,7 +77,7 @@ public class PageProviderSqlSource extends PageSqlSource implements Constant {
     }
 
     /**
-     * 3.3.1°æ±¾Ö®Ç°µÄ·½·¨
+     * 3.3.1ç‰ˆæœ¬ä¹‹å‰çš„æ–¹æ³•
      *
      * @param parameterObject
      * @return
@@ -101,7 +101,7 @@ public class PageProviderSqlSource extends PageSqlSource implements Constant {
     }
 
     /**
-     * 3.4.0Ö®ºóµÄ·½·¨
+     * 3.4.0ä¹‹åçš„æ–¹æ³•
      *
      * @param parameterObject
      * @return

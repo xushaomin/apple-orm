@@ -14,7 +14,7 @@ import com.appleframework.orm.mybatis.pagehelper.parser.OrderByParser;
 import java.util.List;
 
 /**
- * ֧��orderby�ͷ�ҳ
+ * 支持orderby和分页
  *
  * @author liuzh
  * @since 2015-06-27

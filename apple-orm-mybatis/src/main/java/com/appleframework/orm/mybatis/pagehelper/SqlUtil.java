@@ -52,18 +52,18 @@ import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Mybatis - sql¹¤¾ß£¬»ñÈ¡·ÖÒ³ºÍcountµÄMappedStatement£¬ÉèÖÃ·ÖÒ³²ÎÊı
+ * Mybatis - sqlå·¥å…·ï¼Œè·å–åˆ†é¡µå’Œcountçš„MappedStatementï¼Œè®¾ç½®åˆ†é¡µå‚æ•°
  *
  * @author liuzh/abel533/isea533
  * @since 3.6.0
- * ÏîÄ¿µØÖ· : http://git.oschina.net/free/Mybatis_PageHelper
+ * é¡¹ç›®åœ°å€ : http://git.oschina.net/free/Mybatis_PageHelper
  */
 @SuppressWarnings({"rawtypes"})
 public class SqlUtil implements Constant {
     private static final ThreadLocal<Page> LOCAL_PAGE = new ThreadLocal<Page>();
-    //params²ÎÊıÓ³Éä
+    //paramså‚æ•°æ˜ å°„
     private static Map<String, String> PARAMS = new HashMap<String, String>(5);
-    //request»ñÈ¡·½·¨
+    //requestè·å–æ–¹æ³•
     private static Boolean hasRequest;
     private static Class<?> requestClass;
     private static Method getParameterMap;
@@ -78,30 +78,30 @@ public class SqlUtil implements Constant {
         }
     }
 
-    //»º´æcount²éÑ¯µÄms
+    //ç¼“å­˜countæŸ¥è¯¢çš„ms
     private static final Map<String, MappedStatement> msCountMap = new ConcurrentHashMap<String, MappedStatement>();
     
-    //RowBounds²ÎÊıoffset×÷ÎªPageNumÊ¹ÓÃ - Ä¬ÈÏ²»Ê¹ÓÃ
+    //RowBoundså‚æ•°offsetä½œä¸ºPageNumä½¿ç”¨ - é»˜è®¤ä¸ä½¿ç”¨
     private boolean offsetAsPageNo = false;
     
-    //RowBoundsÊÇ·ñ½øĞĞcount²éÑ¯ - Ä¬ÈÏ²»²éÑ¯
+    //RowBoundsæ˜¯å¦è¿›è¡ŒcountæŸ¥è¯¢ - é»˜è®¤ä¸æŸ¥è¯¢
     private boolean rowBoundsWithCount = false;
     
-    //µ±ÉèÖÃÎªtrueµÄÊ±ºò£¬Èç¹ûpagesizeÉèÖÃÎª0£¨»òRowBoundsµÄlimit=0£©£¬¾Í²»Ö´ĞĞ·ÖÒ³£¬·µ»ØÈ«²¿½á¹û
+    //å½“è®¾ç½®ä¸ºtrueçš„æ—¶å€™ï¼Œå¦‚æœpagesizeè®¾ç½®ä¸º0ï¼ˆæˆ–RowBoundsçš„limit=0ï¼‰ï¼Œå°±ä¸æ‰§è¡Œåˆ†é¡µï¼Œè¿”å›å…¨éƒ¨ç»“æœ
     private boolean pageSizeZero = false;
 
-    //¾ßÌåÕë¶ÔÊı¾İ¿âµÄparser
+    //å…·ä½“é’ˆå¯¹æ•°æ®åº“çš„parser
     private Parser parser;
-    //ÊÇ·ñÖ§³Ö½Ó¿Ú²ÎÊıÀ´´«µİ·ÖÒ³²ÎÊı£¬Ä¬ÈÏfalse
+    //æ˜¯å¦æ”¯æŒæ¥å£å‚æ•°æ¥ä¼ é€’åˆ†é¡µå‚æ•°ï¼Œé»˜è®¤false
     private boolean supportMethodsArguments = false;
     /**
-     * ¹¹Ôì·½·¨
+     * æ„é€ æ–¹æ³•
      *
      * @param strDialect
      */
     public SqlUtil(String strDialect) {
         if (strDialect == null || "".equals(strDialect)) {
-            throw new IllegalArgumentException("Mybatis·ÖÒ³²å¼şÎŞ·¨»ñÈ¡dialect²ÎÊı!");
+            throw new IllegalArgumentException("Mybatisåˆ†é¡µæ’ä»¶æ— æ³•è·å–dialectå‚æ•°!");
         }
         Exception exception = null;
         try {
@@ -109,7 +109,7 @@ public class SqlUtil implements Constant {
             parser = AbstractParser.newParser(dialect);
         } catch (Exception e) {
             exception = e;
-            //Òì³£µÄÊ±ºò³¢ÊÔ·´Éä£¬ÔÊĞí×Ô¼ºĞ´ÊµÏÖÀà´«µİ½øÀ´
+            //å¼‚å¸¸çš„æ—¶å€™å°è¯•åå°„ï¼Œå…è®¸è‡ªå·±å†™å®ç°ç±»ä¼ é€’è¿›æ¥
             try {
                 Class<?> parserClass = Class.forName(strDialect);
                 if (Parser.class.isAssignableFrom(parserClass)) {
@@ -137,7 +137,7 @@ public class SqlUtil implements Constant {
     }
 
     /**
-     * »ñÈ¡Page²ÎÊı
+     * è·å–Pageå‚æ•°
      *
      * @return
      */
@@ -150,14 +150,14 @@ public class SqlUtil implements Constant {
     }
 
     /**
-     * ÒÆ³ı±¾µØ±äÁ¿
+     * ç§»é™¤æœ¬åœ°å˜é‡
      */
     public static void clearLocalPage() {
         LOCAL_PAGE.remove();
     }
 
     /**
-     * ¶ÔÏóÖĞ»ñÈ¡·ÖÒ³²ÎÊı
+     * å¯¹è±¡ä¸­è·å–åˆ†é¡µå‚æ•°
      *
      * @param params
      * @return
@@ -167,19 +167,19 @@ public class SqlUtil implements Constant {
         int pageSize;
         MetaObject paramsObject = null;
         if (params == null) {
-            throw new NullPointerException("ÎŞ·¨»ñÈ¡·ÖÒ³²éÑ¯²ÎÊı!");
+            throw new NullPointerException("æ— æ³•è·å–åˆ†é¡µæŸ¥è¯¢å‚æ•°!");
         }
         if (hasRequest && requestClass.isAssignableFrom(params.getClass())) {
             try {
                 paramsObject = SystemMetaObject.forObject(getParameterMap.invoke(params, new Object[]{}));
             } catch (Exception e) {
-                //ºöÂÔ
+                //å¿½ç•¥
             }
         } else {
             paramsObject = SystemMetaObject.forObject(params);
         }
         if (paramsObject == null) {
-            throw new NullPointerException("·ÖÒ³²éÑ¯²ÎÊı´¦ÀíÊ§°Ü!");
+            throw new NullPointerException("åˆ†é¡µæŸ¥è¯¢å‚æ•°å¤„ç†å¤±è´¥!");
         }
         Object orderBy = getParamValue(paramsObject, "orderBy", false);
         boolean hasOrderBy = false;
@@ -198,19 +198,19 @@ public class SqlUtil implements Constant {
             pageNo = Integer.parseInt(String.valueOf(_pageNo));
             pageSize = Integer.parseInt(String.valueOf(_pageSize));
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("·ÖÒ³²ÎÊı²»ÊÇºÏ·¨µÄÊı×ÖÀàĞÍ!");
+            throw new IllegalArgumentException("åˆ†é¡µå‚æ•°ä¸æ˜¯åˆæ³•çš„æ•°å­—ç±»å‹!");
         }
         Page page = new Page(pageNo, pageSize);
-        //count²éÑ¯
+        //countæŸ¥è¯¢
         Object _count = getParamValue(paramsObject, "count", false);
         if (_count != null) {
             page.setCount(Boolean.valueOf(String.valueOf(_count)));
         }
-        //ÅÅĞò
+        //æ’åº
         if (hasOrderBy) {
             page.setOrderBy(orderBy.toString());
         }
-        //²éÑ¯È«²¿
+        //æŸ¥è¯¢å…¨éƒ¨
         Object pageSizeZero = getParamValue(paramsObject, "pageSizeZero", false);
         if (pageSizeZero != null) {
             page.setPageSizeZero(Boolean.valueOf(String.valueOf(pageSizeZero)));
@@ -219,7 +219,7 @@ public class SqlUtil implements Constant {
     }
 
     /**
-     * ´Ó¶ÔÏóÖĞÈ¡²ÎÊı
+     * ä»å¯¹è±¡ä¸­å–å‚æ•°
      *
      * @param paramsObject
      * @param paramName
@@ -240,13 +240,13 @@ public class SqlUtil implements Constant {
             }
         }
         if (required && value == null) {
-            throw new RuntimeException("·ÖÒ³²éÑ¯È±ÉÙ±ØÒªµÄ²ÎÊı:" + PARAMS.get(paramName));
+            throw new RuntimeException("åˆ†é¡µæŸ¥è¯¢ç¼ºå°‘å¿…è¦çš„å‚æ•°:" + PARAMS.get(paramName));
         }
         return value;
     }
 
     /**
-     * ÊÇ·ñÒÑ¾­´¦Àí¹ı
+     * æ˜¯å¦å·²ç»å¤„ç†è¿‡
      *
      * @param ms
      * @return
@@ -259,11 +259,11 @@ public class SqlUtil implements Constant {
     }
 
     /**
-     * ²âÊÔ[¿ØÖÆÌ¨Êä³ö]countºÍ·ÖÒ³sql
+     * æµ‹è¯•[æ§åˆ¶å°è¾“å‡º]countå’Œåˆ†é¡µsql
      *
-     * @param dialect     Êı¾İ¿âÀàĞÍ
-     * @param originalSql Ô­sql
-     * @deprecated ½«ÔÚ5.x°æ±¾È¥µô
+     * @param dialect     æ•°æ®åº“ç±»å‹
+     * @param originalSql åŸsql
+     * @deprecated å°†åœ¨5.xç‰ˆæœ¬å»æ‰
      */
     @Deprecated
     public static void testSql(String dialect, String originalSql) {
@@ -271,11 +271,11 @@ public class SqlUtil implements Constant {
     }
 
     /**
-     * ²âÊÔ[¿ØÖÆÌ¨Êä³ö]countºÍ·ÖÒ³sql
+     * æµ‹è¯•[æ§åˆ¶å°è¾“å‡º]countå’Œåˆ†é¡µsql
      *
-     * @param dialect     Êı¾İ¿âÀàĞÍ
-     * @param originalSql Ô­sql
-     * @deprecated ½«ÔÚ5.x°æ±¾È¥µô
+     * @param dialect     æ•°æ®åº“ç±»å‹
+     * @param originalSql åŸsql
+     * @deprecated å°†åœ¨5.xç‰ˆæœ¬å»æ‰
      */
     @Deprecated
     public static void testSql(Dialect dialect, String originalSql) {
@@ -293,7 +293,7 @@ public class SqlUtil implements Constant {
     }
 
     /**
-     * ĞŞ¸ÄSqlSource
+     * ä¿®æ”¹SqlSource
      *
      * @param ms
      * @throws Throwable
@@ -311,24 +311,24 @@ public class SqlUtil implements Constant {
         } else if (sqlSource instanceof DynamicSqlSource) {
             pageSqlSource = new PageDynamicSqlSource((DynamicSqlSource) sqlSource);
         } else {
-            throw new RuntimeException("ÎŞ·¨´¦Àí¸ÃÀàĞÍ[" + sqlSource.getClass() + "]µÄSqlSource");
+            throw new RuntimeException("æ— æ³•å¤„ç†è¯¥ç±»å‹[" + sqlSource.getClass() + "]çš„SqlSource");
         }
         msObject.setValue("sqlSource", pageSqlSource);
-        //ÓÉÓÚcount²éÑ¯ĞèÒªĞŞ¸Ä·µ»ØÖµ£¬Òò´ËÕâÀïÒª´´½¨Ò»¸öCount²éÑ¯µÄMS
+        //ç”±äºcountæŸ¥è¯¢éœ€è¦ä¿®æ”¹è¿”å›å€¼ï¼Œå› æ­¤è¿™é‡Œè¦åˆ›å»ºä¸€ä¸ªCountæŸ¥è¯¢çš„MS
         msCountMap.put(ms.getId(), MSUtils.newCountMappedStatement(ms));
     }
 
     /**
-     * »ñÈ¡·ÖÒ³²ÎÊı
+     * è·å–åˆ†é¡µå‚æ•°
      *
      * @param args
-     * @return ·µ»ØPage¶ÔÏó
+     * @return è¿”å›Pageå¯¹è±¡
      */
     public Page getPage(Object[] args) {
         Page page = getLocalPage();
         if (page == null || page.isOrderByOnly()) {
             Page oldPage = page;
-            //ÕâÖÖÇé¿öÏÂ,page.isOrderByOnly()±ØÈ»Îªtrue£¬ËùÒÔ²»ÓÃĞ´µ½Ìõ¼şÖĞ
+            //è¿™ç§æƒ…å†µä¸‹,page.isOrderByOnly()å¿…ç„¶ä¸ºtrueï¼Œæ‰€ä»¥ä¸ç”¨å†™åˆ°æ¡ä»¶ä¸­
             if ((args[2] == null || args[2] == RowBounds.DEFAULT) && page != null) {
                 return oldPage;
             }
@@ -338,7 +338,7 @@ public class SqlUtil implements Constant {
                     page = new Page(rowBounds.getOffset(), rowBounds.getLimit(), rowBoundsWithCount);
                 } else {
                     page = new Page(new int[]{rowBounds.getOffset(), rowBounds.getLimit()}, rowBoundsWithCount);
-                    //offsetAsPageNo=falseµÄÊ±ºò£¬ÓÉÓÚPageNumÎÊÌâ£¬²»ÄÜÊ¹ÓÃreasonable£¬ÕâÀï»áÇ¿ÖÆÎªfalse
+                    //offsetAsPageNo=falseçš„æ—¶å€™ï¼Œç”±äºPageNumé—®é¢˜ï¼Œä¸èƒ½ä½¿ç”¨reasonableï¼Œè¿™é‡Œä¼šå¼ºåˆ¶ä¸ºfalse
                 }
             } else {
                 try {
@@ -352,7 +352,7 @@ public class SqlUtil implements Constant {
             }
             setLocalPage(page);
         }
-        //µ±ÉèÖÃÎªtrueµÄÊ±ºò£¬Èç¹ûpagesizeÉèÖÃÎª0£¨»òRowBoundsµÄlimit=0£©£¬¾Í²»Ö´ĞĞ·ÖÒ³£¬·µ»ØÈ«²¿½á¹û
+        //å½“è®¾ç½®ä¸ºtrueçš„æ—¶å€™ï¼Œå¦‚æœpagesizeè®¾ç½®ä¸º0ï¼ˆæˆ–RowBoundsçš„limit=0ï¼‰ï¼Œå°±ä¸æ‰§è¡Œåˆ†é¡µï¼Œè¿”å›å…¨éƒ¨ç»“æœ
         if (page.getPageSizeZero() == null) {
             page.setPageSizeZero(pageSizeZero);
         }
@@ -360,11 +360,11 @@ public class SqlUtil implements Constant {
     }
 
     /**
-     * MybatisÀ¹½ØÆ÷·½·¨£¬ÕâÒ»²½Ç¶Ì×ÎªÁËÔÚ³öÏÖÒì³£Ê±Ò²¿ÉÒÔÇå¿ÕThreadlocal
+     * Mybatisæ‹¦æˆªå™¨æ–¹æ³•ï¼Œè¿™ä¸€æ­¥åµŒå¥—ä¸ºäº†åœ¨å‡ºç°å¼‚å¸¸æ—¶ä¹Ÿå¯ä»¥æ¸…ç©ºThreadlocal
      *
-     * @param invocation À¹½ØÆ÷Èë²Î
-     * @return ·µ»ØÖ´ĞĞ½á¹û
-     * @throws Throwable Å×³öÒì³£
+     * @param invocation æ‹¦æˆªå™¨å…¥å‚
+     * @return è¿”å›æ‰§è¡Œç»“æœ
+     * @throws Throwable æŠ›å‡ºå¼‚å¸¸
      */
     public Object processPage(Invocation invocation) throws Throwable {
         try {
@@ -376,28 +376,28 @@ public class SqlUtil implements Constant {
     }
 
     /**
-     * MybatisÀ¹½ØÆ÷·½·¨
+     * Mybatisæ‹¦æˆªå™¨æ–¹æ³•
      *
-     * @param invocation À¹½ØÆ÷Èë²Î
-     * @return ·µ»ØÖ´ĞĞ½á¹û
-     * @throws Throwable Å×³öÒì³£
+     * @param invocation æ‹¦æˆªå™¨å…¥å‚
+     * @return è¿”å›æ‰§è¡Œç»“æœ
+     * @throws Throwable æŠ›å‡ºå¼‚å¸¸
      */
     private Object _processPage(Invocation invocation) throws Throwable {
         final Object[] args = invocation.getArgs();
         Page page = null;
-        //Ö§³Ö·½·¨²ÎÊıÊ±£¬»áÏÈ³¢ÊÔ»ñÈ¡Page
+        //æ”¯æŒæ–¹æ³•å‚æ•°æ—¶ï¼Œä¼šå…ˆå°è¯•è·å–Page
         if (supportMethodsArguments) {
             page = getPage(args);
         }
-        //·ÖÒ³ĞÅÏ¢
+        //åˆ†é¡µä¿¡æ¯
         RowBounds rowBounds = (RowBounds) args[2];
-        //Ö§³Ö·½·¨²ÎÊıÊ±£¬Èç¹ûpage == null¾ÍËµÃ÷Ã»ÓĞ·ÖÒ³Ìõ¼ş£¬²»ĞèÒª·ÖÒ³²éÑ¯
+        //æ”¯æŒæ–¹æ³•å‚æ•°æ—¶ï¼Œå¦‚æœpage == nullå°±è¯´æ˜æ²¡æœ‰åˆ†é¡µæ¡ä»¶ï¼Œä¸éœ€è¦åˆ†é¡µæŸ¥è¯¢
         if ((supportMethodsArguments && page == null)
-                //µ±²»Ö§³Ö·ÖÒ³²ÎÊıÊ±£¬ÅĞ¶ÏLocalPageºÍRowBoundsÅĞ¶ÏÊÇ·ñĞèÒª·ÖÒ³
+                //å½“ä¸æ”¯æŒåˆ†é¡µå‚æ•°æ—¶ï¼Œåˆ¤æ–­LocalPageå’ŒRowBoundsåˆ¤æ–­æ˜¯å¦éœ€è¦åˆ†é¡µ
                 || (!supportMethodsArguments && SqlUtil.getLocalPage() == null && rowBounds == RowBounds.DEFAULT)) {
             return invocation.proceed();
         } else {
-            //²»Ö§³Ö·ÖÒ³²ÎÊıÊ±£¬page==null£¬ÕâÀïĞèÒª»ñÈ¡
+            //ä¸æ”¯æŒåˆ†é¡µå‚æ•°æ—¶ï¼Œpage==nullï¼Œè¿™é‡Œéœ€è¦è·å–
             if (!supportMethodsArguments && page == null) {
                 page = getPage(args);
             }
@@ -406,7 +406,7 @@ public class SqlUtil implements Constant {
     }
 
     /**
-     * ÊÇ·ñÖ»×ö²éÑ¯
+     * æ˜¯å¦åªåšæŸ¥è¯¢
      *
      * @param page
      * @return
@@ -417,7 +417,7 @@ public class SqlUtil implements Constant {
     }
 
     /**
-     * Ö»×ö²éÑ¯
+     * åªåšæŸ¥è¯¢
      *
      * @param page
      * @param invocation
@@ -426,56 +426,56 @@ public class SqlUtil implements Constant {
      */
     private Page doQueryOnly(Page page, Invocation invocation) throws Throwable {
         page.setCountSignal(null);
-        //Ö´ĞĞÕı³££¨²»·ÖÒ³£©²éÑ¯
+        //æ‰§è¡Œæ­£å¸¸ï¼ˆä¸åˆ†é¡µï¼‰æŸ¥è¯¢
         Object result = invocation.proceed();
-        //µÃµ½´¦Àí½á¹û
+        //å¾—åˆ°å¤„ç†ç»“æœ
         page.setList((List) result);
-        //Ïàµ±ÓÚ²éÑ¯µÚÒ»Ò³
+        //ç›¸å½“äºæŸ¥è¯¢ç¬¬ä¸€é¡µ
         page.setPageNo(1);
-        //ÕâÖÖÇé¿öÏàµ±ÓÚpageSize=total
+        //è¿™ç§æƒ…å†µç›¸å½“äºpageSize=total
         page.setPageSize(page.getPageSize());
-        //ÈÔÈ»ÒªÉèÖÃtotal
+        //ä»ç„¶è¦è®¾ç½®total
         page.setTotalCount(page.getPageSize());
-        //·µ»Ø½á¹ûÈÔÈ»ÎªPageÀàĞÍ - ±ãÓÚºóÃæ¶Ô½ÓÊÕÀàĞÍµÄÍ³Ò»´¦Àí
+        //è¿”å›ç»“æœä»ç„¶ä¸ºPageç±»å‹ - ä¾¿äºåé¢å¯¹æ¥æ”¶ç±»å‹çš„ç»Ÿä¸€å¤„ç†
         return page;
     }
 
     /**
-     * MybatisÀ¹½ØÆ÷·½·¨
+     * Mybatisæ‹¦æˆªå™¨æ–¹æ³•
      *
-     * @param invocation À¹½ØÆ÷Èë²Î
-     * @return ·µ»ØÖ´ĞĞ½á¹û
-     * @throws Throwable Å×³öÒì³£
+     * @param invocation æ‹¦æˆªå™¨å…¥å‚
+     * @return è¿”å›æ‰§è¡Œç»“æœ
+     * @throws Throwable æŠ›å‡ºå¼‚å¸¸
      */
     private Page doProcessPage(Invocation invocation, Page page, Object[] args) throws Throwable {
-        //±£´æRowBounds×´Ì¬
+        //ä¿å­˜RowBoundsçŠ¶æ€
         RowBounds rowBounds = (RowBounds) args[2];
-        //»ñÈ¡Ô­Ê¼µÄms
+        //è·å–åŸå§‹çš„ms
         MappedStatement ms = (MappedStatement) args[0];
-        //ÅĞ¶Ï²¢´¦ÀíÎªPageSqlSource
+        //åˆ¤æ–­å¹¶å¤„ç†ä¸ºPageSqlSource
         if (!isPageSqlSource(ms)) {
             processMappedStatement(ms);
         }
-        //ÉèÖÃµ±Ç°µÄparser£¬ºóÃæÃ¿´ÎÊ¹ÓÃÇ°¶¼»áset£¬ThreadLocalµÄÖµ²»»á²úÉú²»Á¼Ó°Ïì
+        //è®¾ç½®å½“å‰çš„parserï¼Œåé¢æ¯æ¬¡ä½¿ç”¨å‰éƒ½ä¼šsetï¼ŒThreadLocalçš„å€¼ä¸ä¼šäº§ç”Ÿä¸è‰¯å½±å“
         ((PageSqlSource)ms.getSqlSource()).setParser(parser);
         try {
-            //ºöÂÔRowBounds-·ñÔò»á½øĞĞMybatis×Ô´øµÄÄÚ´æ·ÖÒ³
+            //å¿½ç•¥RowBounds-å¦åˆ™ä¼šè¿›è¡ŒMybatisè‡ªå¸¦çš„å†…å­˜åˆ†é¡µ
             args[2] = RowBounds.DEFAULT;
-            //Èç¹ûÖ»½øĞĞÅÅĞò »ò pageSizeZeroµÄÅĞ¶Ï
+            //å¦‚æœåªè¿›è¡Œæ’åº æˆ– pageSizeZeroçš„åˆ¤æ–­
             if (isQueryOnly(page)) {
                 return doQueryOnly(page, invocation);
             }
 
-            //¼òµ¥µÄÍ¨¹ıtotalµÄÖµÀ´ÅĞ¶ÏÊÇ·ñ½øĞĞcount²éÑ¯
+            //ç®€å•çš„é€šè¿‡totalçš„å€¼æ¥åˆ¤æ–­æ˜¯å¦è¿›è¡ŒcountæŸ¥è¯¢
             if (page.isCount()) {
                 page.setCountSignal(Boolean.TRUE);
-                //Ìæ»»MS
+                //æ›¿æ¢MS
                 args[0] = msCountMap.get(ms.getId());
-                //²éÑ¯×ÜÊı
+                //æŸ¥è¯¢æ€»æ•°
                 Object result = invocation.proceed();
-                //»¹Ô­ms
+                //è¿˜åŸms
                 args[0] = ms;
-                //ÉèÖÃ×ÜÊı
+                //è®¾ç½®æ€»æ•°
                 page.setTotalCount((Integer) ((List) result).get(0));
                 if (page.getTotalCount() == 0) {
                     return page;
@@ -483,25 +483,25 @@ public class SqlUtil implements Constant {
             } else {
                 page.setTotalCount(-1l);
             }
-            //pageSize>0µÄÊ±ºòÖ´ĞĞ·ÖÒ³²éÑ¯£¬pageSize<=0µÄÊ±ºò²»Ö´ĞĞÏàµ±ÓÚ¿ÉÄÜÖ»·µ»ØÁËÒ»¸öcount
+            //pageSize>0çš„æ—¶å€™æ‰§è¡Œåˆ†é¡µæŸ¥è¯¢ï¼ŒpageSize<=0çš„æ—¶å€™ä¸æ‰§è¡Œç›¸å½“äºå¯èƒ½åªè¿”å›äº†ä¸€ä¸ªcount
             if (page.getPageSize() > 0 &&
                     ((rowBounds == RowBounds.DEFAULT && page.getPageNo() > 0)
                             || rowBounds != RowBounds.DEFAULT)) {
-                //½«²ÎÊıÖĞµÄMappedStatementÌæ»»ÎªĞÂµÄqs
+                //å°†å‚æ•°ä¸­çš„MappedStatementæ›¿æ¢ä¸ºæ–°çš„qs
                 page.setCountSignal(null);
                 BoundSql boundSql = ms.getBoundSql(args[1]);
                 args[1] = parser.setPageParameter(ms, args[1], boundSql, page);
                 page.setCountSignal(Boolean.FALSE);
-                //Ö´ĞĞ·ÖÒ³²éÑ¯
+                //æ‰§è¡Œåˆ†é¡µæŸ¥è¯¢
                 Object result = invocation.proceed();
-                //µÃµ½´¦Àí½á¹û
+                //å¾—åˆ°å¤„ç†ç»“æœ
                 page.setList((List) result);
             }
         } finally {
             ((PageSqlSource)ms.getSqlSource()).removeParser();
         }
 
-        //·µ»Ø½á¹û
+        //è¿”å›ç»“æœ
         return page;
     }
 
@@ -540,21 +540,21 @@ public class SqlUtil implements Constant {
     }
 
     public void setProperties(Properties p) {
-        //offset×÷ÎªPageNumÊ¹ÓÃ
+        //offsetä½œä¸ºPageNumä½¿ç”¨
         String offsetAsPageNo = p.getProperty("offsetAsPageNo");
         this.offsetAsPageNo = Boolean.parseBoolean(offsetAsPageNo);
-        //RowBounds·½Ê½ÊÇ·ñ×öcount²éÑ¯
+        //RowBoundsæ–¹å¼æ˜¯å¦åšcountæŸ¥è¯¢
         String rowBoundsWithCount = p.getProperty("rowBoundsWithCount");
         this.rowBoundsWithCount = Boolean.parseBoolean(rowBoundsWithCount);
-        //µ±ÉèÖÃÎªtrueµÄÊ±ºò£¬Èç¹ûpagesizeÉèÖÃÎª0£¨»òRowBoundsµÄlimit=0£©£¬¾Í²»Ö´ĞĞ·ÖÒ³
+        //å½“è®¾ç½®ä¸ºtrueçš„æ—¶å€™ï¼Œå¦‚æœpagesizeè®¾ç½®ä¸º0ï¼ˆæˆ–RowBoundsçš„limit=0ï¼‰ï¼Œå°±ä¸æ‰§è¡Œåˆ†é¡µ
         String pageSizeZero = p.getProperty("pageSizeZero");
         this.pageSizeZero = Boolean.parseBoolean(pageSizeZero);
-        //·ÖÒ³ºÏÀí»¯£¬true¿ªÆô£¬Èç¹û·ÖÒ³²ÎÊı²»ºÏÀí»á×Ô¶¯ĞŞÕı¡£Ä¬ÈÏfalse²»ÆôÓÃ
-        //ÊÇ·ñÖ§³Ö½Ó¿Ú²ÎÊıÀ´´«µİ·ÖÒ³²ÎÊı£¬Ä¬ÈÏfalse
+        //åˆ†é¡µåˆç†åŒ–ï¼Œtrueå¼€å¯ï¼Œå¦‚æœåˆ†é¡µå‚æ•°ä¸åˆç†ä¼šè‡ªåŠ¨ä¿®æ­£ã€‚é»˜è®¤falseä¸å¯ç”¨
+        //æ˜¯å¦æ”¯æŒæ¥å£å‚æ•°æ¥ä¼ é€’åˆ†é¡µå‚æ•°ï¼Œé»˜è®¤false
         String supportMethodsArguments = p.getProperty("supportMethodsArguments");
         this.supportMethodsArguments = Boolean.parseBoolean(supportMethodsArguments);
-        //µ±offsetAsPageNo=falseµÄÊ±ºò£¬²»ÄÜ
-        //²ÎÊıÓ³Éä
+        //å½“offsetAsPageNo=falseçš„æ—¶å€™ï¼Œä¸èƒ½
+        //å‚æ•°æ˜ å°„
         setParams(p.getProperty("params"));
     }
 

@@ -35,37 +35,37 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 处理SQL
+ * 澶勭悊SQL
  *
  * @author liuzh
  */
 public interface Parser {
 
     /**
-     * 是否支持MappedStatement全局缓存
+     * 鏄惁鏀寔MappedStatement鍏ㄥ眬缂撳瓨
      *
      * @return
      */
     boolean isSupportedMappedStatementCache();
 
     /**
-     * 获取总数sql - 如果要支持其他数据库，修改这里就可以
+     * 鑾峰彇鎬绘暟sql - 濡傛灉瑕佹敮鎸佸叾浠栨暟鎹簱锛屼慨鏀硅繖閲屽氨鍙互
      *
-     * @param sql 原查询sql
-     * @return 返回count查询sql
+     * @param sql 鍘熸煡璇ql
+     * @return 杩斿洖count鏌ヨsql
      */
     String getCountSql(String sql);
 
     /**
-     * 获取分页sql - 如果要支持其他数据库，修改这里就可以
+     * 鑾峰彇鍒嗛〉sql - 濡傛灉瑕佹敮鎸佸叾浠栨暟鎹簱锛屼慨鏀硅繖閲屽氨鍙互
      *
-     * @param sql 原查询sql
-     * @return 返回分页sql
+     * @param sql 鍘熸煡璇ql
+     * @return 杩斿洖鍒嗛〉sql
      */
     String getPageSql(String sql);
 
     /**
-     * 获取分页参数映射
+     * 鑾峰彇鍒嗛〉鍙傛暟鏄犲皠
      *
      * @param configuration
      * @param boundSql
@@ -74,7 +74,7 @@ public interface Parser {
     List<ParameterMapping> getPageParameterMapping(Configuration configuration, BoundSql boundSql);
 
     /**
-     * 设置分页参数
+     * 璁剧疆鍒嗛〉鍙傛暟
      *
      * @param ms
      * @param parameterObject

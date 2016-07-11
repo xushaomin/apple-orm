@@ -29,47 +29,47 @@ import java.util.List;
 import com.appleframework.model.page.Pagination;
 
 /**
- * Mybatis - ·ÖÒ³¶ÔÏó
+ * Mybatis - åˆ†é¡µå¯¹è±¡
  *
  * @author liuzh/abel533/isea533
  * @version 3.6.0
- *          ÏîÄ¿µØÖ· : http://git.oschina.net/free/Mybatis_PageHelper
+ *          é¡¹ç›®åœ°å€ : http://git.oschina.net/free/Mybatis_PageHelper
  */
 public class Page extends Pagination {
 	
     private static final long serialVersionUID = 1L;
 
     /**
-     * ÆğÊ¼ĞĞ
+     * èµ·å§‹è¡Œ
      */
     private long startRow;
     /**
-     * Ä©ĞĞ
+     * æœ«è¡Œ
      */
     private long endRow;
 
     /**
-     * °üº¬count²éÑ¯
+     * åŒ…å«countæŸ¥è¯¢
      */
     private boolean count;
     
     /**
-     * countĞÅºÅ£¬3ÖÖÇé¿ö£¬nullµÄÊ±ºòÖ´ĞĞÄ¬ÈÏBoundSql,trueµÄÊ±ºòÖ´ĞĞcount£¬falseÖ´ĞĞ·ÖÒ³
+     * countä¿¡å·ï¼Œ3ç§æƒ…å†µï¼Œnullçš„æ—¶å€™æ‰§è¡Œé»˜è®¤BoundSql,trueçš„æ—¶å€™æ‰§è¡Œcountï¼Œfalseæ‰§è¡Œåˆ†é¡µ
      */
     private Boolean countSignal;
     
     /**
-     * ÅÅĞò
+     * æ’åº
      */
     private String orderBy;
     
     /**
-     * Ö»Ôö¼ÓÅÅĞò
+     * åªå¢åŠ æ’åº
      */
     private boolean orderByOnly;
         
     /**
-     * µ±ÉèÖÃÎªtrueµÄÊ±ºò£¬Èç¹ûpagesizeÉèÖÃÎª0£¨»òRowBoundsµÄlimit=0£©£¬¾Í²»Ö´ĞĞ·ÖÒ³£¬·µ»ØÈ«²¿½á¹û
+     * å½“è®¾ç½®ä¸ºtrueçš„æ—¶å€™ï¼Œå¦‚æœpagesizeè®¾ç½®ä¸º0ï¼ˆæˆ–RowBoundsçš„limit=0ï¼‰ï¼Œå°±ä¸æ‰§è¡Œåˆ†é¡µï¼Œè¿”å›å…¨éƒ¨ç»“æœ
      */
     private Boolean pageSizeZero;
 
@@ -158,7 +158,7 @@ public class Page extends Pagination {
     }
 
     /**
-     * ¼ÆËãÆğÖ¹ĞĞºÅ
+     * è®¡ç®—èµ·æ­¢è¡Œå·
      */
     private void calculateStartAndEndRow() {
         this.startRow = this.pageNo > 0 ? (this.pageNo - 1) * this.pageSize : 0;
@@ -200,7 +200,7 @@ public class Page extends Pagination {
     }
 
     /**
-     * ÊÇ·ñÖ´ĞĞcount²éÑ¯
+     * æ˜¯å¦æ‰§è¡ŒcountæŸ¥è¯¢
      *
      * @param count
      * @return
@@ -211,7 +211,7 @@ public class Page extends Pagination {
     }
 
     /**
-     * µ±ÉèÖÃÎªtrueµÄÊ±ºò£¬Èç¹ûpagesizeÉèÖÃÎª0£¨»òRowBoundsµÄlimit=0£©£¬¾Í²»Ö´ĞĞ·ÖÒ³£¬·µ»ØÈ«²¿½á¹û
+     * å½“è®¾ç½®ä¸ºtrueçš„æ—¶å€™ï¼Œå¦‚æœpagesizeè®¾ç½®ä¸º0ï¼ˆæˆ–RowBoundsçš„limit=0ï¼‰ï¼Œå°±ä¸æ‰§è¡Œåˆ†é¡µï¼Œè¿”å›å…¨éƒ¨ç»“æœ
      *
      * @param pageSizeZero
      * @return

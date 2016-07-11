@@ -14,7 +14,7 @@ import com.appleframework.orm.mybatis.pagehelper.parser.OrderByParser;
 import java.util.List;
 
 /**
- * ÃèÊöĞÅÏ¢
+ * æè¿°ä¿¡æ¯
  *
  * @author liuzh
  * @since 2015-06-26
