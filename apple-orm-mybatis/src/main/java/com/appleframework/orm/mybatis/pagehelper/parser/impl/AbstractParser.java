@@ -149,8 +149,8 @@ public abstract class AbstractParser implements Parser, Constant {
         if (boundSql != null && boundSql.getParameterMappings() != null) {
             newParameterMappings.addAll(boundSql.getParameterMappings());
         }
-        newParameterMappings.add(new ParameterMapping.Builder(configuration, PAGEPARAMETER_FIRST, Integer.class).build());
-        newParameterMappings.add(new ParameterMapping.Builder(configuration, PAGEPARAMETER_SECOND, Integer.class).build());
+        newParameterMappings.add(new ParameterMapping.Builder(configuration, PAGEPARAMETER_FIRST, Long.class).build());
+        newParameterMappings.add(new ParameterMapping.Builder(configuration, PAGEPARAMETER_SECOND, Long.class).build());
         return newParameterMappings;
     }
 

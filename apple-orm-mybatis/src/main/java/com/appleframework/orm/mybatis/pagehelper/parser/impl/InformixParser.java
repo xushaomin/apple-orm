@@ -50,8 +50,8 @@ public class InformixParser extends AbstractParser {
     @Override
     public List<ParameterMapping> getPageParameterMapping(Configuration configuration, BoundSql boundSql) {
         List<ParameterMapping> newParameterMappings = new ArrayList<ParameterMapping>();
-        newParameterMappings.add(new ParameterMapping.Builder(configuration, PAGEPARAMETER_FIRST, Integer.class).build());
-        newParameterMappings.add(new ParameterMapping.Builder(configuration, PAGEPARAMETER_SECOND, Integer.class).build());
+        newParameterMappings.add(new ParameterMapping.Builder(configuration, PAGEPARAMETER_FIRST, Long.class).build());
+        newParameterMappings.add(new ParameterMapping.Builder(configuration, PAGEPARAMETER_SECOND, Long.class).build());
         if (boundSql.getParameterMappings() != null) {
             newParameterMappings.addAll(boundSql.getParameterMappings());
         }
