@@ -98,18 +98,18 @@ public class Page extends Pagination {
     }
 
     /**
-     * int[] rowBounds
+     * long[] rowBounds
      * 0 : offset
      * 1 : limit
      */
-    public Page(int[] rowBounds, boolean count) {
+    public Page(long[] rowBounds, boolean count) {
         super();
         if (rowBounds[0] == 0 && rowBounds[1] == Integer.MAX_VALUE) {
             pageSizeZero = true;
             this.pageSize = 0;
         } else {
             this.pageSize = rowBounds[1];
-            this.pageNo = rowBounds[1] != 0 ? (int) (Math.ceil(((double) rowBounds[0] + rowBounds[1]) / rowBounds[1])) : 0;
+            this.pageNo = rowBounds[1] != 0 ? (long) (Math.ceil(((double) rowBounds[0] + rowBounds[1]) / rowBounds[1])) : 0;
         }
         this.startRow = rowBounds[0];
         this.count = count;
@@ -124,7 +124,7 @@ public class Page extends Pagination {
         return endRow;
     }
 
-    public Page setEndRow(int endRow) {
+    public Page setEndRow(long endRow) {
         this.endRow = endRow;
         return this;
     }
@@ -141,7 +141,7 @@ public class Page extends Pagination {
         return startRow;
     }
 
-    public Page setStartRow(int startRow) {
+    public Page setStartRow(long startRow) {
         this.startRow = startRow;
         return this;
     }
