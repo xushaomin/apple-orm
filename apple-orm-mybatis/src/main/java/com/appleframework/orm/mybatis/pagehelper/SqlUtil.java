@@ -476,7 +476,7 @@ public class SqlUtil implements Constant {
                 //还原ms
                 args[0] = ms;
                 //设置总数
-                page.setTotalCount((Long) ((List) result).get(0));
+                page.setTotalCount(Long.parseLong(String.valueOf(((List) result).get(0))));
                 if (page.getTotalCount() == 0) {
                     return page;
                 }
