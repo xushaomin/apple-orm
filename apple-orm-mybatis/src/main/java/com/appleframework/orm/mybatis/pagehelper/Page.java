@@ -87,7 +87,7 @@ public class Page extends Pagination {
 
     private Page(long pageNo, long pageSize, boolean count, Boolean reasonable) {
         super(pageNo, pageSize);
-        if (pageNo == 1 && pageSize == Integer.MAX_VALUE) {
+        if (pageNo == 1 && pageSize == Long.MAX_VALUE) {
             pageSizeZero = true;
             pageSize = 0;
         }
@@ -104,7 +104,7 @@ public class Page extends Pagination {
      */
     public Page(long[] rowBounds, boolean count) {
         super();
-        if (rowBounds[0] == 0 && rowBounds[1] == Integer.MAX_VALUE) {
+        if (rowBounds[0] == 0 && rowBounds[1] == Long.MAX_VALUE) {
             pageSizeZero = true;
             this.pageSize = 0;
         } else {
