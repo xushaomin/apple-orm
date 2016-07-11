@@ -149,12 +149,12 @@ public abstract class AbstractParser implements Parser, Constant {
         if (boundSql != null && boundSql.getParameterMappings() != null) {
             newParameterMappings.addAll(boundSql.getParameterMappings());
         }
-        newParameterMappings.add(new ParameterMapping.Builder(configuration, PAGEPARAMETER_FIRST, Long.class).build());
-        newParameterMappings.add(new ParameterMapping.Builder(configuration, PAGEPARAMETER_SECOND, Long.class).build());
+        newParameterMappings.add(new ParameterMapping.Builder(configuration, PAGEPARAMETER_FIRST, Integer.class).build());
+        newParameterMappings.add(new ParameterMapping.Builder(configuration, PAGEPARAMETER_SECOND, Integer.class).build());
         return newParameterMappings;
     }
 
-    public Map<String, Object> setPageParameter(MappedStatement ms, Object parameterObject, BoundSql boundSql, Page page) {
+    public Map<String, Object> setPageParameter(MappedStatement ms, Object parameterObject, BoundSql boundSql, Page<?> page) {
         return processParameter(ms, parameterObject, boundSql);
     }
 }

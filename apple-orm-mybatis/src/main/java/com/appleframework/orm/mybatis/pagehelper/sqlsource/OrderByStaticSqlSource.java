@@ -1,5 +1,7 @@
 package com.appleframework.orm.mybatis.pagehelper.sqlsource;
 
+import java.util.List;
+
 import org.apache.ibatis.builder.StaticSqlSource;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.ParameterMapping;
@@ -8,11 +10,6 @@ import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.reflection.SystemMetaObject;
 import org.apache.ibatis.session.Configuration;
 
-import com.appleframework.orm.mybatis.pagehelper.PageHelper;
-import com.appleframework.orm.mybatis.pagehelper.parser.OrderByParser;
-
-import java.util.List;
-
 /**
  * 描述信息
  *
@@ -20,6 +17,7 @@ import java.util.List;
  * @since 2015-06-26
  */
 public class OrderByStaticSqlSource implements SqlSource {
+	
     private String sql;
     private List<ParameterMapping> parameterMappings;
     private Configuration configuration;
@@ -35,11 +33,7 @@ public class OrderByStaticSqlSource implements SqlSource {
     }
 
     public BoundSql getBoundSql(Object parameterObject) {
-        String orderBy = PageHelper.getOrderBy();
         String tempSql = sql;
-        if (orderBy != null) {
-            tempSql = OrderByParser.converToOrderBySql(sql, orderBy);
-        }
         return new BoundSql(configuration, tempSql, parameterMappings, parameterObject);
     }
 
