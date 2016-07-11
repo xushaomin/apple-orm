@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 创建新的MappedStatement,主要是Count返回值int
+ * 鍒涘缓鏂扮殑MappedStatement,涓昏鏄疌ount杩斿洖鍊糹nt
  *
  * @author liuzh
  */
@@ -40,7 +40,7 @@ public class MSUtils implements Constant {
     private static final List<ResultMapping> EMPTY_RESULTMAPPING = new ArrayList<ResultMapping>(0);
 
     /**
-     * 新建count查询和分页查询的MappedStatement
+     * 鏂板缓count鏌ヨ鍜屽垎椤垫煡璇㈢殑MappedStatement
      *
      * @param ms
      * @return
@@ -61,7 +61,7 @@ public class MSUtils implements Constant {
         }
         builder.timeout(ms.getTimeout());
         builder.parameterMap(ms.getParameterMap());
-        //count查询返回值int
+        //count鏌ヨ杩斿洖鍊糹nt
         List<ResultMap> resultMaps = new ArrayList<ResultMap>();
         ResultMap resultMap = new ResultMap.Builder(ms.getConfiguration(), ms.getId(), int.class, EMPTY_RESULTMAPPING).build();
         resultMaps.add(resultMap);

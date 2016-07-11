@@ -43,7 +43,7 @@ public enum Dialect {
                     dialects += "," + d;
                 }
             }
-            throw new IllegalArgumentException("Mybatis分页插件dialect参数值错误，可选值为[" + dialects + "]");
+            throw new IllegalArgumentException("Mybatis鍒嗛〉鎻掍欢dialect鍙傛暟鍊奸敊璇紝鍙�夊�间负[" + dialects + "]");
         }
     }
 

@@ -56,7 +56,7 @@ public class SqlServerParser extends AbstractParser {
 
     @Override
     public boolean isSupportedMappedStatementCache() {
-        //由于sqlserver每次分页参数都是直接写入到sql语句中，因此不能缓存MS
+        //鐢变簬sqlserver姣忔鍒嗛〉鍙傛暟閮芥槸鐩存帴鍐欏叆鍒皊ql璇彞涓紝鍥犳涓嶈兘缂撳瓨MS
         return false;
     }
 

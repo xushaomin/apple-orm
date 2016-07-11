@@ -44,41 +44,41 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 
 /**
- * Mybatis - Í¨ÓÃ·ÖÒ³À¹½ØÆ÷
+ * Mybatis - é€šç”¨åˆ†é¡µæ‹¦æˆªå™¨
  *
  * @author liuzh/abel533/isea533
  * @version 3.3.0
- *          ÏîÄ¿µØÖ· : http://git.oschina.net/free/Mybatis_PageHelper
+ *          é¡¹ç›®åœ°å€ : http://git.oschina.net/free/Mybatis_PageHelper
  */
 
 @Intercepts(@Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}))
 public class PageHelper implements Interceptor {
     
-	//sql¹¤¾ßÀà
+	//sqlå·¥å…·ç±»
     private SqlUtil sqlUtil;
     
-    //ÊôĞÔ²ÎÊıĞÅÏ¢
+    //å±æ€§å‚æ•°ä¿¡æ¯
     private Properties properties;
     
-    //ÅäÖÃ¶ÔÏó·½Ê½
+    //é…ç½®å¯¹è±¡æ–¹å¼
     private SqlUtilConfig sqlUtilConfig;
     
-    //×Ô¶¯»ñÈ¡dialect,Èç¹ûÃ»ÓĞsetProperties»òsetSqlUtilConfig£¬Ò²¿ÉÒÔÕı³£½øĞĞ
+    //è‡ªåŠ¨è·å–dialect,å¦‚æœæ²¡æœ‰setPropertiesæˆ–setSqlUtilConfigï¼Œä¹Ÿå¯ä»¥æ­£å¸¸è¿›è¡Œ
     private boolean autoDialect = true;
     
-    //ÔËĞĞÊ±×Ô¶¯»ñÈ¡dialect
+    //è¿è¡Œæ—¶è‡ªåŠ¨è·å–dialect
     private boolean autoRuntimeDialect;
     
-    //¶àÊı¾İÔ´Ê±£¬»ñÈ¡jdbcurlºóÊÇ·ñ¹Ø±ÕÊı¾İÔ´
+    //å¤šæ•°æ®æºæ—¶ï¼Œè·å–jdbcurlåæ˜¯å¦å…³é—­æ•°æ®æº
     private boolean closeConn = true;
     
-    //»º´æ
+    //ç¼“å­˜
     private Map<String, SqlUtil> urlSqlUtilMap = new ConcurrentHashMap<String, SqlUtil>();
     
     private ReentrantLock lock = new ReentrantLock();
 
     /**
-     * »ñÈ¡ÈÎÒâ²éÑ¯·½·¨µÄcount×ÜÊı
+     * è·å–ä»»æ„æŸ¥è¯¢æ–¹æ³•çš„countæ€»æ•°
      *
      * @param select
      * @return
@@ -90,32 +90,32 @@ public class PageHelper implements Interceptor {
     }
 
     /**
-     * ¿ªÊ¼·ÖÒ³
+     * å¼€å§‹åˆ†é¡µ
      *
-     * @param pageNo  Ò³Âë
-     * @param pageSize Ã¿Ò³ÏÔÊ¾ÊıÁ¿
+     * @param pageNo  é¡µç 
+     * @param pageSize æ¯é¡µæ˜¾ç¤ºæ•°é‡
      */
     public static Page startPage(long pageNo, long pageSize) {
         return startPage(pageNo, pageSize, true);
     }
 
     /**
-     * ¿ªÊ¼·ÖÒ³
+     * å¼€å§‹åˆ†é¡µ
      *
-     * @param pageNo  Ò³Âë
-     * @param pageSize Ã¿Ò³ÏÔÊ¾ÊıÁ¿
-     * @param count    ÊÇ·ñ½øĞĞcount²éÑ¯
+     * @param pageNo  é¡µç 
+     * @param pageSize æ¯é¡µæ˜¾ç¤ºæ•°é‡
+     * @param count    æ˜¯å¦è¿›è¡ŒcountæŸ¥è¯¢
      */
     public static Page startPage(long pageNo, long pageSize, boolean count) {
         return startPage(pageNo, pageSize, count, null);
     }
 
     /**
-     * ¿ªÊ¼·ÖÒ³
+     * å¼€å§‹åˆ†é¡µ
      *
-     * @param pageNo  Ò³Âë
-     * @param pageSize Ã¿Ò³ÏÔÊ¾ÊıÁ¿
-     * @param orderBy  ÅÅĞò
+     * @param pageNo  é¡µç 
+     * @param pageSize æ¯é¡µæ˜¾ç¤ºæ•°é‡
+     * @param orderBy  æ’åº
      */
     public static Page startPage(long pageNo, long pageSize, String orderBy) {
         Page page = startPage(pageNo, pageSize);
@@ -124,25 +124,25 @@ public class PageHelper implements Interceptor {
     }
 
     /**
-     * ¿ªÊ¼·ÖÒ³
+     * å¼€å§‹åˆ†é¡µ
      *
-     * @param offset Ò³Âë
-     * @param limit  Ã¿Ò³ÏÔÊ¾ÊıÁ¿
+     * @param offset é¡µç 
+     * @param limit  æ¯é¡µæ˜¾ç¤ºæ•°é‡
      */
     public static Page offsetPage(int offset, int limit) {
         return offsetPage(offset, limit, true);
     }
 
     /**
-     * ¿ªÊ¼·ÖÒ³
+     * å¼€å§‹åˆ†é¡µ
      *
-     * @param offset Ò³Âë
-     * @param limit  Ã¿Ò³ÏÔÊ¾ÊıÁ¿
-     * @param count  ÊÇ·ñ½øĞĞcount²éÑ¯
+     * @param offset é¡µç 
+     * @param limit  æ¯é¡µæ˜¾ç¤ºæ•°é‡
+     * @param count  æ˜¯å¦è¿›è¡ŒcountæŸ¥è¯¢
      */
     public static Page offsetPage(int offset, int limit, boolean count) {
         Page page = new Page(new int[]{offset, limit}, count);
-        //µ±ÒÑ¾­Ö´ĞĞ¹ıorderByµÄÊ±ºò
+        //å½“å·²ç»æ‰§è¡Œè¿‡orderByçš„æ—¶å€™
         Page oldPage = SqlUtil.getLocalPage();
         if (oldPage != null && oldPage.isOrderByOnly()) {
             page.setOrderBy(oldPage.getOrderBy());
@@ -152,11 +152,11 @@ public class PageHelper implements Interceptor {
     }
 
     /**
-     * ¿ªÊ¼·ÖÒ³
+     * å¼€å§‹åˆ†é¡µ
      *
-     * @param offset  Ò³Âë
-     * @param limit   Ã¿Ò³ÏÔÊ¾ÊıÁ¿
-     * @param orderBy ÅÅĞò
+     * @param offset  é¡µç 
+     * @param limit   æ¯é¡µæ˜¾ç¤ºæ•°é‡
+     * @param orderBy æ’åº
      */
     public static Page offsetPage(int offset, int limit, String orderBy) {
         Page page = offsetPage(offset, limit);
@@ -165,30 +165,30 @@ public class PageHelper implements Interceptor {
     }
 
     /**
-     * ¿ªÊ¼·ÖÒ³
+     * å¼€å§‹åˆ†é¡µ
      *
-     * @param pageNo    Ò³Âë
-     * @param pageSize   Ã¿Ò³ÏÔÊ¾ÊıÁ¿
-     * @param count      ÊÇ·ñ½øĞĞcount²éÑ¯
-     * @param reasonable ·ÖÒ³ºÏÀí»¯,nullÊ±ÓÃÄ¬ÈÏÅäÖÃ
+     * @param pageNo    é¡µç 
+     * @param pageSize   æ¯é¡µæ˜¾ç¤ºæ•°é‡
+     * @param count      æ˜¯å¦è¿›è¡ŒcountæŸ¥è¯¢
+     * @param reasonable åˆ†é¡µåˆç†åŒ–,nullæ—¶ç”¨é»˜è®¤é…ç½®
      */
     public static Page startPage(long pageNo, long pageSize, boolean count, Boolean reasonable) {
         return startPage(pageNo, pageSize, count, reasonable, null);
     }
 
     /**
-     * ¿ªÊ¼·ÖÒ³
+     * å¼€å§‹åˆ†é¡µ
      *
-     * @param pageNo      Ò³Âë
-     * @param pageSize     Ã¿Ò³ÏÔÊ¾ÊıÁ¿
-     * @param count        ÊÇ·ñ½øĞĞcount²éÑ¯
-     * @param reasonable   ·ÖÒ³ºÏÀí»¯,nullÊ±ÓÃÄ¬ÈÏÅäÖÃ
-     * @param pageSizeZero trueÇÒpageSize=0Ê±·µ»ØÈ«²¿½á¹û£¬falseÊ±·ÖÒ³,nullÊ±ÓÃÄ¬ÈÏÅäÖÃ
+     * @param pageNo      é¡µç 
+     * @param pageSize     æ¯é¡µæ˜¾ç¤ºæ•°é‡
+     * @param count        æ˜¯å¦è¿›è¡ŒcountæŸ¥è¯¢
+     * @param reasonable   åˆ†é¡µåˆç†åŒ–,nullæ—¶ç”¨é»˜è®¤é…ç½®
+     * @param pageSizeZero trueä¸”pageSize=0æ—¶è¿”å›å…¨éƒ¨ç»“æœï¼Œfalseæ—¶åˆ†é¡µ,nullæ—¶ç”¨é»˜è®¤é…ç½®
      */
     public static Page startPage(long pageNo, long pageSize, boolean count, Boolean reasonable, Boolean pageSizeZero) {
         Page page = new Page(pageNo, pageSize, count);
         page.setPageSizeZero(pageSizeZero);
-        //µ±ÒÑ¾­Ö´ĞĞ¹ıorderByµÄÊ±ºò
+        //å½“å·²ç»æ‰§è¡Œè¿‡orderByçš„æ—¶å€™
         Page oldPage = SqlUtil.getLocalPage();
         if (oldPage != null && oldPage.isOrderByOnly()) {
             page.setOrderBy(oldPage.getOrderBy());
@@ -198,13 +198,13 @@ public class PageHelper implements Interceptor {
     }
 
     /**
-     * ¿ªÊ¼·ÖÒ³
+     * å¼€å§‹åˆ†é¡µ
      *
      * @param params
      */
     public static Page startPage(Object params) {
         Page page = SqlUtil.getPageFromObject(params);
-        //µ±ÒÑ¾­Ö´ĞĞ¹ıorderByµÄÊ±ºò
+        //å½“å·²ç»æ‰§è¡Œè¿‡orderByçš„æ—¶å€™
         Page oldPage = SqlUtil.getLocalPage();
         if (oldPage != null && oldPage.isOrderByOnly()) {
             page.setOrderBy(oldPage.getOrderBy());
@@ -214,7 +214,7 @@ public class PageHelper implements Interceptor {
     }
 
     /**
-     * ÅÅĞò
+     * æ’åº
      *
      * @param orderBy
      */
@@ -231,7 +231,7 @@ public class PageHelper implements Interceptor {
     }
 
     /**
-     * »ñÈ¡orderBy
+     * è·å–orderBy
      *
      * @return
      */
@@ -249,11 +249,11 @@ public class PageHelper implements Interceptor {
     }
 
     /**
-     * MybatisÀ¹½ØÆ÷·½·¨
+     * Mybatisæ‹¦æˆªå™¨æ–¹æ³•
      *
-     * @param invocation À¹½ØÆ÷Èë²Î
-     * @return ·µ»ØÖ´ĞĞ½á¹û
-     * @throws Throwable Å×³öÒì³£
+     * @param invocation æ‹¦æˆªå™¨å…¥å‚
+     * @return è¿”å›æ‰§è¡Œç»“æœ
+     * @throws Throwable æŠ›å‡ºå¼‚å¸¸
      */
     public Object intercept(Invocation invocation) throws Throwable {
         if (autoRuntimeDialect) {
@@ -268,7 +268,7 @@ public class PageHelper implements Interceptor {
     }
 
     /**
-     * ³õÊ¼»¯sqlUtil
+     * åˆå§‹åŒ–sqlUtil
      *
      * @param invocation
      */
@@ -284,7 +284,7 @@ public class PageHelper implements Interceptor {
     }
 
     /**
-     * »ñÈ¡url
+     * è·å–url
      *
      * @param dataSource
      * @return
@@ -310,13 +310,13 @@ public class PageHelper implements Interceptor {
     }
 
     /**
-     * ¸ù¾İdatasource´´½¨¶ÔÓ¦µÄsqlUtil
+     * æ ¹æ®datasourceåˆ›å»ºå¯¹åº”çš„sqlUtil
      *
      * @param invocation
      */
     public SqlUtil getSqlUtil(Invocation invocation) {
         MappedStatement ms = (MappedStatement) invocation.getArgs()[0];
-        //¸ÄÎª¶ÔdataSource×ö»º´æ
+        //æ”¹ä¸ºå¯¹dataSourceåšç¼“å­˜
         DataSource dataSource = ms.getConfiguration().getEnvironment().getDataSource();
         String url = getUrl(dataSource);
         if (urlSqlUtilMap.containsKey(url)) {
@@ -328,11 +328,11 @@ public class PageHelper implements Interceptor {
                 return urlSqlUtilMap.get(url);
             }
             if (StringUtil.isEmpty(url)) {
-                throw new RuntimeException("ÎŞ·¨×Ô¶¯»ñÈ¡jdbcUrl£¬ÇëÔÚ·ÖÒ³²å¼şÖĞÅäÖÃdialect²ÎÊı!");
+                throw new RuntimeException("æ— æ³•è‡ªåŠ¨è·å–jdbcUrlï¼Œè¯·åœ¨åˆ†é¡µæ’ä»¶ä¸­é…ç½®dialectå‚æ•°!");
             }
             String dialect = Dialect.fromJdbcUrl(url);
             if (dialect == null) {
-                throw new RuntimeException("ÎŞ·¨×Ô¶¯»ñÈ¡Êı¾İ¿âÀàĞÍ£¬ÇëÍ¨¹ıdialect²ÎÊıÖ¸¶¨!");
+                throw new RuntimeException("æ— æ³•è‡ªåŠ¨è·å–æ•°æ®åº“ç±»å‹ï¼Œè¯·é€šè¿‡dialectå‚æ•°æŒ‡å®š!");
             }
             SqlUtil sqlUtil = new SqlUtil(dialect);
             if (this.properties != null) {
@@ -348,7 +348,7 @@ public class PageHelper implements Interceptor {
     }
 
     /**
-     * Ö»À¹½ØExecutor
+     * åªæ‹¦æˆªExecutor
      *
      * @param target
      * @return
@@ -362,30 +362,30 @@ public class PageHelper implements Interceptor {
     }
 
     private void checkVersion() {
-        //MyBatis3.2.0°æ±¾Ğ£Ñé
+        //MyBatis3.2.0ç‰ˆæœ¬æ ¡éªŒ
         try {
-            Class.forName("org.apache.ibatis.scripting.xmltags.SqlNode");//SqlNodeÊÇ3.2.0Ö®ºóĞÂÔöµÄÀà
+            Class.forName("org.apache.ibatis.scripting.xmltags.SqlNode");//SqlNodeæ˜¯3.2.0ä¹‹åæ–°å¢çš„ç±»
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException("ÄúÊ¹ÓÃµÄMyBatis°æ±¾Ì«µÍ£¬MyBatis·ÖÒ³²å¼şPageHelperÖ§³ÖMyBatis3.2.0¼°ÒÔÉÏ°æ±¾!");
+            throw new RuntimeException("æ‚¨ä½¿ç”¨çš„MyBatisç‰ˆæœ¬å¤ªä½ï¼ŒMyBatisåˆ†é¡µæ’ä»¶PageHelperæ”¯æŒMyBatis3.2.0åŠä»¥ä¸Šç‰ˆæœ¬!");
         }
     }
 
     /**
-     * ÉèÖÃÊôĞÔÖµ
+     * è®¾ç½®å±æ€§å€¼
      *
-     * @param p ÊôĞÔÖµ
+     * @param p å±æ€§å€¼
      */
     public void setProperties(Properties p) {
         checkVersion();
-        //¶àÊı¾İÔ´Ê±£¬»ñÈ¡jdbcurlºóÊÇ·ñ¹Ø±ÕÊı¾İÔ´
+        //å¤šæ•°æ®æºæ—¶ï¼Œè·å–jdbcurlåæ˜¯å¦å…³é—­æ•°æ®æº
         String closeConn = p.getProperty("closeConn");
-        //½â¾ö#97
+        //è§£å†³#97
         if(StringUtil.isNotEmpty(closeConn)){
             this.closeConn = Boolean.parseBoolean(closeConn);
         }
-        //³õÊ¼»¯SqlUtilµÄPARAMS
+        //åˆå§‹åŒ–SqlUtilçš„PARAMS
         SqlUtil.setParams(p.getProperty("params"));
-        //Êı¾İ¿â·½ÑÔ
+        //æ•°æ®åº“æ–¹è¨€
         String dialect = p.getProperty("dialect");
         String runtimeDialect = p.getProperty("autoRuntimeDialect");
         if (StringUtil.isNotEmpty(runtimeDialect) && runtimeDialect.equalsIgnoreCase("TRUE")) {
@@ -403,15 +403,15 @@ public class PageHelper implements Interceptor {
     }
 
     /**
-     * ÉèÖÃÊôĞÔÖµ
+     * è®¾ç½®å±æ€§å€¼
      *
      * @param config
      */
     public void setSqlUtilConfig(SqlUtilConfig config) {
         checkVersion();
-        //³õÊ¼»¯SqlUtilµÄPARAMS
+        //åˆå§‹åŒ–SqlUtilçš„PARAMS
         SqlUtil.setParams(config.getParams());
-        //¶àÊı¾İÔ´Ê±£¬»ñÈ¡jdbcurlºóÊÇ·ñ¹Ø±ÕÊı¾İÔ´
+        //å¤šæ•°æ®æºæ—¶ï¼Œè·å–jdbcurlåæ˜¯å¦å…³é—­æ•°æ®æº
         this.closeConn = config.isCloseConn();
         if (config.isAutoRuntimeDialect()) {
             this.autoRuntimeDialect = true;

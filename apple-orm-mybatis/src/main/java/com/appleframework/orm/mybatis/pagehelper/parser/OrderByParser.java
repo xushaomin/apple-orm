@@ -1,4 +1,4 @@
-﻿package com.appleframework.orm.mybatis.pagehelper.parser;
+package com.appleframework.orm.mybatis.pagehelper.parser;
 
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.statement.Statement;

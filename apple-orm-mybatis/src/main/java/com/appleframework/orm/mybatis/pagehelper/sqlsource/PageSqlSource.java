@@ -7,7 +7,7 @@ import com.appleframework.orm.mybatis.pagehelper.SqlUtil;
 import com.appleframework.orm.mybatis.pagehelper.parser.Parser;
 
 /**
- * ÃèÊöĞÅÏ¢
+ * æè¿°ä¿¡æ¯
  *
  * @author liuzh
  * @since 2015-06-29
@@ -25,7 +25,7 @@ public abstract class PageSqlSource implements SqlSource {
     }
 
     /**
-     * ·µ»ØÖµnull - ÆÕÍ¨,true - count,false - page
+     * è¿”å›å€¼null - æ™®é€š,true - count,false - page
      *
      * @return
      */
@@ -34,7 +34,7 @@ public abstract class PageSqlSource implements SqlSource {
     }
 
     /**
-     * »ñÈ¡Õı³£µÄBoundSql
+     * è·å–æ­£å¸¸çš„BoundSql
      *
      * @param parameterObject
      * @return
@@ -42,7 +42,7 @@ public abstract class PageSqlSource implements SqlSource {
     protected abstract BoundSql getDefaultBoundSql(Object parameterObject);
 
     /**
-     * »ñÈ¡Count²éÑ¯µÄBoundSql
+     * è·å–CountæŸ¥è¯¢çš„BoundSql
      *
      * @param parameterObject
      * @return
@@ -50,7 +50,7 @@ public abstract class PageSqlSource implements SqlSource {
     protected abstract BoundSql getCountBoundSql(Object parameterObject);
 
     /**
-     * »ñÈ¡·ÖÒ³²éÑ¯µÄBoundSql
+     * è·å–åˆ†é¡µæŸ¥è¯¢çš„BoundSql
      *
      * @param parameterObject
      * @return
@@ -58,7 +58,7 @@ public abstract class PageSqlSource implements SqlSource {
     protected abstract BoundSql getPageBoundSql(Object parameterObject);
 
     /**
-     * »ñÈ¡BoundSql
+     * è·å–BoundSql
      *
      * @param parameterObject
      * @return

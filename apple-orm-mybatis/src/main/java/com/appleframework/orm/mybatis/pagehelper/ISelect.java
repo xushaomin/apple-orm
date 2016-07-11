@@ -25,7 +25,7 @@
 package com.appleframework.orm.mybatis.pagehelper;
 
 /**
- * ·ÖÒ³²éÑ¯½Ó¿Ú
+ * åˆ†é¡µæŸ¥è¯¢æ¥å£
  *
  * @author liuzh_3nofxnp
  * @since 2015-12-18 18:51
@@ -33,7 +33,7 @@ package com.appleframework.orm.mybatis.pagehelper;
 public interface ISelect {
 
     /**
-     * ÔÚ½Ó¿ÚÖĞµ÷ÓÃ×Ô¼ºµÄ²éÑ¯·½·¨£¬²»ÒªÔÚ¸Ã·½·¨ÄÚĞ´¹ı¶à´úÂë£¬Ö»ÒªÒ»ĞĞ²éÑ¯·½·¨×îºÃ
+     * åœ¨æ¥å£ä¸­è°ƒç”¨è‡ªå·±çš„æŸ¥è¯¢æ–¹æ³•ï¼Œä¸è¦åœ¨è¯¥æ–¹æ³•å†…å†™è¿‡å¤šä»£ç ï¼Œåªè¦ä¸€è¡ŒæŸ¥è¯¢æ–¹æ³•æœ€å¥½
      */
     void doSelect();
 

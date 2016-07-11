@@ -47,7 +47,7 @@ import java.util.Map;
  * @author liuzh
  */
 public abstract class AbstractParser implements Parser, Constant {
-    //´¦ÀíSQL
+    //å¤„ç†SQL
     public static final SqlParser sqlParser = new SqlParser();
 
     public static Parser newParser(Dialect dialect) {
@@ -83,7 +83,7 @@ public abstract class AbstractParser implements Parser, Constant {
                 parser = new H2Parser();
                 break;
             default:
-                throw new RuntimeException("·ÖÒ³²å¼ş" + dialect + "·½ÑÔ´íÎó!");
+                throw new RuntimeException("åˆ†é¡µæ’ä»¶" + dialect + "æ–¹è¨€é”™è¯¯!");
         }
         return parser;
     }
@@ -94,16 +94,16 @@ public abstract class AbstractParser implements Parser, Constant {
         if (parameterObject == null) {
             paramMap = new HashMap<String, Object>();
         } else if (parameterObject instanceof Map) {
-            //½â¾ö²»¿É±äMapµÄÇé¿ö
+            //è§£å†³ä¸å¯å˜Mapçš„æƒ…å†µ
             paramMap = new HashMap<String, Object>();
             paramMap.putAll((Map) parameterObject);
         } else {
             paramMap = new HashMap<String, Object>();
-            //¶¯Ì¬sqlÊ±µÄÅĞ¶ÏÌõ¼ş²»»á³öÏÖÔÚParameterMappingÖĞ£¬µ«ÊÇ±ØĞëÓĞ£¬ËùÒÔÕâÀïĞèÒªÊÕ¼¯ËùÓĞµÄgetterÊôĞÔ
-            //TypeHandlerRegistry¿ÉÒÔÖ±½Ó´¦ÀíµÄ»á×÷ÎªÒ»¸öÖ±½ÓÊ¹ÓÃµÄ¶ÔÏó½øĞĞ´¦Àí
+            //åŠ¨æ€sqlæ—¶çš„åˆ¤æ–­æ¡ä»¶ä¸ä¼šå‡ºç°åœ¨ParameterMappingä¸­ï¼Œä½†æ˜¯å¿…é¡»æœ‰ï¼Œæ‰€ä»¥è¿™é‡Œéœ€è¦æ”¶é›†æ‰€æœ‰çš„getterå±æ€§
+            //TypeHandlerRegistryå¯ä»¥ç›´æ¥å¤„ç†çš„ä¼šä½œä¸ºä¸€ä¸ªç›´æ¥ä½¿ç”¨çš„å¯¹è±¡è¿›è¡Œå¤„ç†
             boolean hasTypeHandler = ms.getConfiguration().getTypeHandlerRegistry().hasTypeHandler(parameterObject.getClass());
             MetaObject metaObject = SystemMetaObject.forObject(parameterObject);
-            //ĞèÒªÕë¶Ô×¢½âĞÎÊ½µÄMyProviderSqlSource±£´æÔ­Öµ
+            //éœ€è¦é’ˆå¯¹æ³¨è§£å½¢å¼çš„MyProviderSqlSourceä¿å­˜åŸå€¼
             if (ms.getSqlSource() instanceof PageProviderSqlSource) {
                 paramMap.put(PROVIDER_OBJECT, parameterObject);
             }
@@ -112,7 +112,7 @@ public abstract class AbstractParser implements Parser, Constant {
                     paramMap.put(name, metaObject.getValue(name));
                 }
             }
-            //ÏÂÃæÕâ¶Î·½·¨£¬Ö÷Òª½â¾öÒ»¸ö³£¼ûÀàĞÍµÄ²ÎÊıÊ±µÄÎÊÌâ
+            //ä¸‹é¢è¿™æ®µæ–¹æ³•ï¼Œä¸»è¦è§£å†³ä¸€ä¸ªå¸¸è§ç±»å‹çš„å‚æ•°æ—¶çš„é—®é¢˜
             if (boundSql.getParameterMappings() != null && boundSql.getParameterMappings().size() > 0) {
                 for (ParameterMapping parameterMapping : boundSql.getParameterMappings()) {
                     String name = parameterMapping.getProperty();
@@ -128,7 +128,7 @@ public abstract class AbstractParser implements Parser, Constant {
                 }
             }
         }
-        //±¸·İÔ­Ê¼²ÎÊı¶ÔÏó
+        //å¤‡ä»½åŸå§‹å‚æ•°å¯¹è±¡
         paramMap.put(ORIGINAL_PARAMETER_OBJECT, parameterObject);
         return paramMap;
     }

@@ -25,29 +25,29 @@
 package com.appleframework.orm.mybatis.pagehelper;
 
 /**
- * ÊÊÓÃÓÚSpring Boot
+ * é€‚ç”¨äºSpring Boot
  *
  * @author liuzh_3nofxnp
  * @since 4.1.0
  */
 public class SqlUtilConfig {
-    //·½ÑÔ
+    //æ–¹è¨€
     private String dialect;
-    //RowBounds²ÎÊıoffset×÷ÎªPageNumÊ¹ÓÃ - Ä¬ÈÏ²»Ê¹ÓÃ
+    //RowBoundså‚æ•°offsetä½œä¸ºPageNumä½¿ç”¨ - é»˜è®¤ä¸ä½¿ç”¨
     private boolean offsetAsPageNo = false;
-    //RowBoundsÊÇ·ñ½øĞĞcount²éÑ¯ - Ä¬ÈÏ²»²éÑ¯
+    //RowBoundsæ˜¯å¦è¿›è¡ŒcountæŸ¥è¯¢ - é»˜è®¤ä¸æŸ¥è¯¢
     private boolean rowBoundsWithCount = false;
-    //µ±ÉèÖÃÎªtrueµÄÊ±ºò£¬Èç¹ûpagesizeÉèÖÃÎª0£¨»òRowBoundsµÄlimit=0£©£¬¾Í²»Ö´ĞĞ·ÖÒ³£¬·µ»ØÈ«²¿½á¹û
+    //å½“è®¾ç½®ä¸ºtrueçš„æ—¶å€™ï¼Œå¦‚æœpagesizeè®¾ç½®ä¸º0ï¼ˆæˆ–RowBoundsçš„limit=0ï¼‰ï¼Œå°±ä¸æ‰§è¡Œåˆ†é¡µï¼Œè¿”å›å…¨éƒ¨ç»“æœ
     private boolean pageSizeZero = false;
-    //·ÖÒ³ºÏÀí»¯
+    //åˆ†é¡µåˆç†åŒ–
     private boolean reasonable = false;
-    //ÊÇ·ñÖ§³Ö½Ó¿Ú²ÎÊıÀ´´«µİ·ÖÒ³²ÎÊı£¬Ä¬ÈÏfalse
+    //æ˜¯å¦æ”¯æŒæ¥å£å‚æ•°æ¥ä¼ é€’åˆ†é¡µå‚æ•°ï¼Œé»˜è®¤false
     private boolean supportMethodsArguments = false;
-    //²ÎÊı±ğÃû
+    //å‚æ•°åˆ«å
     private String params;
-    //ÔËĞĞÊ±×Ô¶¯»ñÈ¡dialect
+    //è¿è¡Œæ—¶è‡ªåŠ¨è·å–dialect
     private boolean autoRuntimeDialect;
-    //¶àÊı¾İÔ´Ê±£¬»ñÈ¡jdbcurlºóÊÇ·ñ¹Ø±ÕÊı¾İÔ´
+    //å¤šæ•°æ®æºæ—¶ï¼Œè·å–jdbcurlåæ˜¯å¦å…³é—­æ•°æ®æº
     private boolean closeConn = true;
 
     public String getDialect() {

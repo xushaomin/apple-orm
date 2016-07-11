@@ -28,16 +28,16 @@ package com.appleframework.orm.mybatis.pagehelper;
  * @author liuzh
  */
 public interface Constant {
-    //·ÖÒ³µÄidºó×º
+    //åˆ†é¡µçš„idåç¼€
     String SUFFIX_PAGE = "_PageHelper";
-    //count²éÑ¯µÄidºó×º
+    //countæŸ¥è¯¢çš„idåç¼€
     String SUFFIX_COUNT = SUFFIX_PAGE + "_Count";
-    //µÚÒ»¸ö·ÖÒ³²ÎÊı
+    //ç¬¬ä¸€ä¸ªåˆ†é¡µå‚æ•°
     String PAGEPARAMETER_FIRST = "First" + SUFFIX_PAGE;
-    //µÚ¶ş¸ö·ÖÒ³²ÎÊı
+    //ç¬¬äºŒä¸ªåˆ†é¡µå‚æ•°
     String PAGEPARAMETER_SECOND = "Second" + SUFFIX_PAGE;
 
     String PROVIDER_OBJECT = "_provider_object";
-    //´æ´¢Ô­Ê¼µÄ²ÎÊı
+    //å­˜å‚¨åŸå§‹çš„å‚æ•°
     String ORIGINAL_PARAMETER_OBJECT = "_ORIGINAL_PARAMETER_OBJECT";
 }
