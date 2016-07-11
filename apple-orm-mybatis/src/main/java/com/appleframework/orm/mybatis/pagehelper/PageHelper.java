@@ -129,7 +129,7 @@ public class PageHelper implements Interceptor {
      * @param offset 页码
      * @param limit  每页显示数量
      */
-    public static Page offsetPage(int offset, int limit) {
+    public static Page offsetPage(long offset, long limit) {
         return offsetPage(offset, limit, true);
     }
 
@@ -140,8 +140,8 @@ public class PageHelper implements Interceptor {
      * @param limit  每页显示数量
      * @param count  是否进行count查询
      */
-    public static Page offsetPage(int offset, int limit, boolean count) {
-        Page page = new Page(new int[]{offset, limit}, count);
+    public static Page offsetPage(long offset, long limit, boolean count) {
+        Page page = new Page(new long[]{offset, limit}, count);
         //当已经执行过orderBy的时候
         Page oldPage = SqlUtil.getLocalPage();
         if (oldPage != null && oldPage.isOrderByOnly()) {
@@ -158,7 +158,7 @@ public class PageHelper implements Interceptor {
      * @param limit   每页显示数量
      * @param orderBy 排序
      */
-    public static Page offsetPage(int offset, int limit, String orderBy) {
+    public static Page offsetPage(long offset, long limit, String orderBy) {
         Page page = offsetPage(offset, limit);
         page.setOrderBy(orderBy);
         return page;

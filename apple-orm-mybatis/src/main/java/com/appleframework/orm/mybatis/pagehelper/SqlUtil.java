@@ -163,8 +163,8 @@ public class SqlUtil implements Constant {
      * @return
      */
     public static Page getPageFromObject(Object params) {
-        int pageNo;
-        int pageSize;
+        long pageNo;
+        long pageSize;
         MetaObject paramsObject = null;
         if (params == null) {
             throw new NullPointerException("无法获取分页查询参数!");
@@ -195,8 +195,8 @@ public class SqlUtil implements Constant {
                 page.setOrderByOnly(true);
                 return page;
             }
-            pageNo = Integer.parseInt(String.valueOf(_pageNo));
-            pageSize = Integer.parseInt(String.valueOf(_pageSize));
+            pageNo = Long.parseLong(String.valueOf(_pageNo));
+            pageSize = Long.parseLong(String.valueOf(_pageSize));
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("分页参数不是合法的数字类型!");
         }
@@ -337,7 +337,7 @@ public class SqlUtil implements Constant {
                 if (offsetAsPageNo) {
                     page = new Page(rowBounds.getOffset(), rowBounds.getLimit(), rowBoundsWithCount);
                 } else {
-                    page = new Page(new int[]{rowBounds.getOffset(), rowBounds.getLimit()}, rowBoundsWithCount);
+                    page = new Page(new long[]{rowBounds.getOffset(), rowBounds.getLimit()}, rowBoundsWithCount);
                     //offsetAsPageNo=false的时候，由于PageNum问题，不能使用reasonable，这里会强制为false
                 }
             } else {
@@ -476,7 +476,7 @@ public class SqlUtil implements Constant {
                 //还原ms
                 args[0] = ms;
                 //设置总数
-                page.setTotalCount((Integer) ((List) result).get(0));
+                page.setTotalCount((Long) ((List) result).get(0));
                 if (page.getTotalCount() == 0) {
                     return page;
                 }
