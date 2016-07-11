@@ -228,6 +228,11 @@ public class Page extends Pagination {
         return this.totalCount;
     }
 
+    public Page doSelectPage(ISelect select) {
+        select.doSelect();
+        return (Page) this;
+    }
+    
 	@Override
 	public String toString() {
 		return "Page [startRow=" + startRow + ", endRow=" + endRow + ", count=" + count + ", countSignal=" + countSignal
