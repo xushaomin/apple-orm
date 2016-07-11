@@ -173,7 +173,7 @@ public class SqlServer {
      */
     protected SelectBody wrapSetOperationList(SetOperationList setOperationList) {
         //获取最后一个plainSelect
-        SelectBody setSelectBody = setOperationList.getPlainSelects().get(setOperationList.getPlainSelects().size() - 1);
+        SelectBody setSelectBody = setOperationList.getSelects().get(setOperationList.getSelects().size() - 1);
         if (!(setSelectBody instanceof PlainSelect)) {
             throw new RuntimeException("目前无法处理该SQL，您可以将该SQL发送给abel533@gmail.com协助作者解决!");
         }
@@ -275,10 +275,10 @@ public class SqlServer {
             }
         } else {
             SetOperationList operationList = (SetOperationList) selectBody;
-            if (operationList.getPlainSelects() != null && operationList.getPlainSelects().size() > 0) {
-                List<PlainSelect> plainSelects = operationList.getPlainSelects();
-                for (PlainSelect plainSelect : plainSelects) {
-                    processPlainSelect(plainSelect, level + 1);
+            if (operationList.getSelects() != null && operationList.getSelects().size() > 0) {
+                List<SelectBody> plainSelects = operationList.getSelects();
+                for (SelectBody plainSelect : plainSelects) {
+                    processSelectBody(plainSelect, level + 1);
                 }
             }
         }
