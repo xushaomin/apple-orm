@@ -19,6 +19,17 @@ public class PaginationHelper {
 	}
 	
 	/**
+	 * 开始分页
+	 *
+	 * @param page
+	 *            分页对象
+	 */
+	public static Pagination startPage(Pagination page) {
+		PaginationContants.setLocalPage(page);
+		return page;
+	}
+	
+	/**
 	 * 获取分页
 	 *
 	 */
