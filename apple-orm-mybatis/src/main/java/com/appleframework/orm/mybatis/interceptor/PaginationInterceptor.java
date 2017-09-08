@@ -91,6 +91,9 @@ public class PaginationInterceptor extends PaginationHelper implements Intercept
 				logger.debug(" no page parameter ...");
 			}
 		}
+		else {
+			clearPage();
+		}
 		
 		if (null == page)
 			return ivk.proceed();
