@@ -46,7 +46,7 @@ import com.appleframework.orm.mybatis.utils.SystemUtility;
  * 
  */
 @Intercepts({ @Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class }) })
-public class PaginationInterceptor implements Interceptor {
+public class PaginationInterceptor extends PaginationHelper implements Interceptor {
 
 	private static Logger logger = Logger.getLogger(PaginationInterceptor.class);
 
@@ -70,27 +70,32 @@ public class PaginationInterceptor implements Interceptor {
 		BoundSql boundSql = delegate.getBoundSql();
 		// 获得查询对象
 		Object parameterObject = boundSql.getParameterObject();
-		Pagination page = null;
+		Pagination page = getPage();
 		
-		// 根据参数类型判断是否是分页方法
-		if (parameterObject instanceof PageQuery) {
-			PageQuery query = (PageQuery) parameterObject;
-			page = query.getDefaultPage();
-		}
-
-		else if(parameterObject instanceof Map) {
-			Map<String, Object> query = (Map<String, Object>) parameterObject;
-			try {
-				page = (Pagination)query.get("page");
-			} catch (BindingException e) {
-				page = null;
+		if(null == page) {
+			// 根据参数类型判断是否是分页方法
+			if (parameterObject instanceof PageQuery) {
+				PageQuery query = (PageQuery) parameterObject;
+				page = query.getDefaultPage();
 			}
-			if(null == page)
-				return ivk.proceed();
+
+			else if(parameterObject instanceof Map) {
+				Map<String, Object> query = (Map<String, Object>) parameterObject;
+				try {
+					page = (Pagination)query.get("page");
+				} catch (BindingException e) {
+					page = null;
+				}
+			}
+			else {
+				logger.debug(" no page parameter ...");
+			}
 		}
-		else {
+		
+		if (null == page)
 			return ivk.proceed();
-		}
+		
+		
 		logger.debug(" beginning to intercept page SQL...");
 		Connection connection = (Connection) ivk.getArgs()[0];
 		String sql = boundSql.getSql();

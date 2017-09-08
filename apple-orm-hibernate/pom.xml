@@ -6,7 +6,7 @@
 	<parent>
 		<artifactId>apple-orm</artifactId>
 		<groupId>com.appleframework.orm</groupId>
-		<version>0.1.4.RELEASE</version>
+		<version>0.1.5-SNAPSHOT</version>
 	</parent>
 	<artifactId>apple-orm-hibernate</artifactId>
 	<name>apple-orm-hibernate</name>
