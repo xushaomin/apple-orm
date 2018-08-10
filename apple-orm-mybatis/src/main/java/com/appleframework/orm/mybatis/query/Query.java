@@ -3,7 +3,7 @@ package com.appleframework.orm.mybatis.query;
 import java.util.Map;
 
 import com.appleframework.model.Operator;
-import com.appleframework.model.page.Pagination;
+import com.appleframework.model.page.SimplePage;
 
 /**
  * 数据传输对象接口<br>
@@ -30,20 +30,20 @@ public interface Query extends Map<String, Object> {
 	public Object getDefaultPo();
 	
 	/**
-	 * 给Pagination压入第一个默认Pagination对象<br>
+	 * 给SimplePage压入第一个默认SimplePage对象<br>
 	 * 为了方便存取(省去根据Key来存取和类型转换的过程)
 	 * 
-	 * @param Pagination
-	 *            压入Dto的Pagination对象
+	 * @param SimplePage
+	 *            压入Dto的SimplePage对象
 	 */
-	public void setDefaultPage(Pagination page);
+	public void setDefaultPage(SimplePage page);
 	
 	/**
-	 * 获取第一个默认Pagination对象<br>
+	 * 获取第一个默认SimplePage对象<br>
 	 * 为了方便存取(省去根据Key来存取和类型转换的过程)
-	 * @param Pagination 压入Pagination的PO对象
+	 * @param SimplePage 压入SimplePage的PO对象
 	 */
-	public Pagination getDefaultPage();
+	public SimplePage getDefaultPage();
 	
 	/**
 	 * 给Operater压入第一个默认Operater对象<br>

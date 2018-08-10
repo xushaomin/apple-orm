@@ -3,7 +3,7 @@ package com.appleframework.orm.mybatis.page;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.appleframework.model.page.Pagination;
+import com.appleframework.model.page.SimplePage;
 
 /**
  * 封装查询蚕食和查询条件
@@ -14,7 +14,7 @@ import com.appleframework.model.page.Pagination;
 public class Query {
 	
 	private Map<String, Object> queryParams;
-	private Pagination page;
+	private SimplePage page;
 
 	public Map<String, Object> getQueryParams() {
 		return queryParams;
@@ -24,21 +24,21 @@ public class Query {
 		this.queryParams = queryParams;
 	}
 
-	public Pagination getPage() {
+	public SimplePage getPage() {
 		return page;
 	}
 
-	public void setPage(Pagination page) {
+	public void setPage(SimplePage page) {
 		this.page = page;
 	}
 	
 	public Query(){}
 	
-	public Query(Pagination page){
+	public Query(SimplePage page){
 		this.page = page;
 	}
 	
-	public Query(Pagination page, Map<String, Object> queryParams){
+	public Query(SimplePage page, Map<String, Object> queryParams){
 		this.page = page;
 		this.queryParams = queryParams;
 	}
@@ -47,11 +47,11 @@ public class Query {
 		return new Query();
 	}
 
-	public static Query create(Pagination page, Map<String, Object> queryParams) {
+	public static Query create(SimplePage page, Map<String, Object> queryParams) {
 		return new Query(page, queryParams);
 	}
 	
-	public static Query create(Pagination page) {
+	public static Query create(SimplePage page) {
 		return new Query(page);
 	}
 	
