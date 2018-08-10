@@ -1,22 +1,22 @@
 package com.appleframework.orm.mybatis.interceptor;
 
-import com.appleframework.model.page.Pagination;
+import com.appleframework.model.page.SimplePage;
 
 
 public class PaginationContants {
 	
-    private static final ThreadLocal<Pagination> LOCAL_PAGE = new ThreadLocal<Pagination>();
+    private static final ThreadLocal<SimplePage> LOCAL_PAGE = new ThreadLocal<SimplePage>();
 
     /**
      * 获取Page参数
      *
      * @return
      */
-    public static Pagination getLocalPage() {
+    public static SimplePage getLocalPage() {
         return LOCAL_PAGE.get();
     }
 
-    public static void setLocalPage(Pagination page) {
+    public static void setLocalPage(SimplePage page) {
         LOCAL_PAGE.set(page);
     }
 

@@ -1,6 +1,6 @@
 package com.appleframework.orm.mybatis.interceptor;
 
-import com.appleframework.model.page.Pagination;
+import com.appleframework.model.page.SimplePage;
 
 public class PaginationHelper {
 
@@ -12,8 +12,8 @@ public class PaginationHelper {
 	 * @param pageSize
 	 *            每页显示数量
 	 */
-	public static Pagination startPage(long pageNo, long pageSize) {
-		Pagination page = new Pagination(pageNo, pageSize);
+	public static SimplePage startPage(long pageNo, long pageSize) {
+		SimplePage page = new SimplePage(pageNo, pageSize);
 		PaginationContants.setLocalPage(page);
 		return page;
 	}
@@ -24,7 +24,7 @@ public class PaginationHelper {
 	 * @param page
 	 *            分页对象
 	 */
-	public static Pagination startPage(Pagination page) {
+	public static SimplePage startPage(SimplePage page) {
 		PaginationContants.setLocalPage(page);
 		return page;
 	}
@@ -33,7 +33,7 @@ public class PaginationHelper {
 	 * 获取分页
 	 *
 	 */
-	public static Pagination getPage() {
+	public static SimplePage getPage() {
 		return PaginationContants.getLocalPage();
 	}
 	
