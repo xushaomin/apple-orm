@@ -33,7 +33,7 @@ import org.apache.ibatis.type.TypeHandler;
 import org.apache.ibatis.type.TypeHandlerRegistry;
 import org.apache.log4j.Logger;
 
-import com.appleframework.model.page.Pagination;
+import com.appleframework.model.page.SimplePage;
 import com.appleframework.orm.mybatis.parser.SqlParser;
 import com.appleframework.orm.mybatis.parser.SqlServer;
 import com.appleframework.orm.mybatis.query.PageQuery;
@@ -42,7 +42,7 @@ import com.appleframework.orm.mybatis.utils.SystemUtility;
 /**
  * 查询分页拦截器，用户拦截SQL，并加上分页的参数和高级查询条件
  * 
- * @author dendy
+ * @author cruise.xu
  * 
  */
 @Intercepts({ @Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class }) })
@@ -70,7 +70,7 @@ public class PaginationInterceptor extends PaginationHelper implements Intercept
 		BoundSql boundSql = delegate.getBoundSql();
 		// 获得查询对象
 		Object parameterObject = boundSql.getParameterObject();
-		Pagination page = getPage();
+		SimplePage page = getPage();
 		
 		if(null == page) {
 			// 根据参数类型判断是否是分页方法
@@ -82,7 +82,7 @@ public class PaginationInterceptor extends PaginationHelper implements Intercept
 			else if(parameterObject instanceof Map) {
 				Map<String, Object> query = (Map<String, Object>) parameterObject;
 				try {
-					page = (Pagination)query.get("page");
+					page = (SimplePage)query.get("page");
 				} catch (BindingException e) {
 					page = null;
 				}
@@ -210,7 +210,7 @@ public class PaginationInterceptor extends PaginationHelper implements Intercept
 	 * @param page
 	 * @return
 	 */
-	private String generatePageSql(String sql, Pagination page) {
+	private String generatePageSql(String sql, SimplePage page) {
 		if (page != null && (dialect != null || !dialect.equals(""))) {
 			StringBuffer pageSql = new StringBuffer();
 			if ("mysql".equals(dialect)) {

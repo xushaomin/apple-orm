@@ -6,7 +6,7 @@
 	<parent>
 		<artifactId>apple-orm</artifactId>
 		<groupId>com.appleframework.orm</groupId>
-		<version>0.1.5.RELEASE</version>
+		<version>0.1.6-SNAPSHOT</version>
 	</parent>
 	<artifactId>apple-orm-mybatis</artifactId>
 	<name>apple-orm-mybatis</name>
@@ -38,14 +38,6 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>c3p0</groupId>
-			<artifactId>c3p0</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>druid</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
