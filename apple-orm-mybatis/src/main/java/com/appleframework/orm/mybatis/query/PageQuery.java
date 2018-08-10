@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.appleframework.model.Operator;
-import com.appleframework.model.page.Pagination;
+import com.appleframework.model.page.SimplePage;
 import com.appleframework.model.utils.TypeCaseHelper;
 
 /**
@@ -194,25 +194,25 @@ public class PageQuery extends HashMap<String, Object> implements Query {
 	}
 
 	/**
-	 * 给Pagination压入第一个默认Pagination对象<br>
+	 * 给SimplePage压入第一个默认SimplePage对象<br>
 	 * 为了方便存取(省去根据Key来存取和类型转换的过程)
 	 * 
-	 * @param Pagination
-	 *            压入Dto的Pagination对象
+	 * @param SimplePage
+	 *            压入Dto的SimplePage对象
 	 */
-	public void setDefaultPage(Pagination page) {
+	public void setDefaultPage(SimplePage page) {
 		put("defaultPage", page);
 	}
 
 	/**
-	 * 获取第一个默认Pagination对象<br>
+	 * 获取第一个默认SimplePage对象<br>
 	 * 为了方便存取(省去根据Key来存取和类型转换的过程)
 	 * 
-	 * @param Pagination
-	 *            压入Pagination的PO对象
+	 * @param SimplePage
+	 *            压入SimplePage的PO对象
 	 */
-	public Pagination getDefaultPage() {
-		return (Pagination) get("defaultPage");
+	public SimplePage getDefaultPage() {
+		return (SimplePage) get("defaultPage");
 	}
 
 	@Override
@@ -254,7 +254,7 @@ public class PageQuery extends HashMap<String, Object> implements Query {
 	 * @param page
 	 *            QueryPage
 	 */
-	public static PageQuery create(Pagination page) {
+	public static PageQuery create(SimplePage page) {
 		PageQuery query = new PageQuery();
 		query.setDefaultPage(page);
 		return query;
@@ -265,7 +265,7 @@ public class PageQuery extends HashMap<String, Object> implements Query {
 		return query;
 	}
 	
-	public static PageQuery create(Pagination page, Map<String, Object> params) {
+	public static PageQuery create(SimplePage page, Map<String, Object> params) {
 		PageQuery query = new PageQuery();
 		query.setDefaultPage(page);
 		query.putAll(params);

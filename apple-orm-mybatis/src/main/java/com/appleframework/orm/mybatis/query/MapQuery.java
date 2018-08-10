@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.appleframework.model.Operator;
-import com.appleframework.model.page.Pagination;
+import com.appleframework.model.page.SimplePage;
 
 /**
  * 封装查询蚕食和查询条件
@@ -27,7 +27,7 @@ public class MapQuery extends HashMap<String, Object> implements Query  {
 	}
 
 	@Override
-	public void setDefaultPage(Pagination page) {
+	public void setDefaultPage(SimplePage page) {
 		this.put("page", page);
 	}
 
@@ -57,14 +57,14 @@ public class MapQuery extends HashMap<String, Object> implements Query  {
 	}
 	
 	/**
-	 * 获取第一个默认Pagination对象<br>
+	 * 获取第一个默认SimplePage对象<br>
 	 * 为了方便存取(省去根据Key来存取和类型转换的过程)
 	 * 
-	 * @param Pagination
-	 *            压入Pagination的PO对象
+	 * @param SimplePage
+	 *            压入SimplePage的PO对象
 	 */
-	public Pagination getDefaultPage() {
-		return (Pagination) get("defaultPage");
+	public SimplePage getDefaultPage() {
+		return (SimplePage) get("defaultPage");
 	}
 	
 	@Override
