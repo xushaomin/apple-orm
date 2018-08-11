@@ -98,7 +98,6 @@ public class PaginationInterceptor extends PaginationHelper implements Intercept
 		if (null == page)
 			return ivk.proceed();
 		
-		
 		logger.debug(" beginning to intercept page SQL...");
 		Connection connection = (Connection) ivk.getArgs()[0];
 		String sql = boundSql.getSql();
