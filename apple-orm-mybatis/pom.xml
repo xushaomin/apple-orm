@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <project
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<artifactId>apple-orm</artifactId>
@@ -11,26 +12,20 @@
 	<artifactId>apple-orm-mybatis</artifactId>
 	<name>apple-orm-mybatis</name>
 	<url>http://mvnrepo.appleframework.com</url>
-	
+
 	<properties>
+		<jsqlparser.version>0.9.5</jsqlparser.version>
 	</properties>
-		<dependencies>
-	
+	<dependencies>
+
 		<dependency>
 			<groupId>com.appleframework</groupId>
 			<artifactId>apple-model</artifactId>
 		</dependency>
-				
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 		</dependency>
-				
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-		</dependency>
-		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
@@ -53,12 +48,13 @@
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis-spring</artifactId>
 		</dependency>
-		
+
 		<dependency>
-      		<groupId>com.github.jsqlparser</groupId>
-      		<artifactId>jsqlparser</artifactId>
-      		<version>0.9.5</version>
-    	</dependency>
+			<groupId>com.github.jsqlparser</groupId>
+			<artifactId>jsqlparser</artifactId>
+			<version>${jsqlparser.version}</version>
+		</dependency>
+		
 	</dependencies>
 
 </project>

@@ -47,9 +47,9 @@ import com.appleframework.orm.hibernate.utils.BeanUtility;
 import com.appleframework.orm.hibernate.utils.ReflectionUtility;
 
 /**
- * DAO基类。
+ * DAO鍩虹被銆�
  * 
- * 提供hql分页查询，example分页查询，拷贝更新等功能。
+ * 鎻愪緵hql鍒嗛〉鏌ヨ锛宔xample鍒嗛〉鏌ヨ锛屾嫹璐濇洿鏂扮瓑鍔熻兘銆�
  * 
  * 
  * @param <T>
@@ -72,7 +72,7 @@ public class HibernateBaseDAO2 {
 	}
 
 	/**
-	 * 新增一条数据库记录,返回主键
+	 * 鏂板涓�鏉℃暟鎹簱璁板綍,杩斿洖涓婚敭
 	 * 
 	 * @param entity
 	 *@return
@@ -86,7 +86,7 @@ public class HibernateBaseDAO2 {
 	}
 	
 	/**
-	 * 刷新整个Session缓存
+	 * 鍒锋柊鏁翠釜Session缂撳瓨
 	 * 
 	 *@return
 	 */
@@ -95,7 +95,7 @@ public class HibernateBaseDAO2 {
 	}
 
 	/**
-	 * 更新一条记录
+	 * 鏇存柊涓�鏉¤褰�
 	 * 
 	 * @param entity
 	 *@return
@@ -111,10 +111,10 @@ public class HibernateBaseDAO2 {
 	}
 
 	/**
-	 * 使用update pojo set aa=xx 语句批量更新,如果hql语句带有参数，那么param参数不为空 例子 update pojo
-	 * set name=:name,address=:add where id=:id ,param中有3个元素，1 key ="name"
-	 * value="参数值" 2 key="add" value="参数的值" 3 key="id" value="参数的值";
-	 * 如果hql中没有参数，param对象置为NULL 2010-1-22 
+	 * 浣跨敤update pojo set aa=xx 璇彞鎵归噺鏇存柊,濡傛灉hql璇彞甯︽湁鍙傛暟锛岄偅涔坧aram鍙傛暟涓嶄负绌� 渚嬪瓙 update pojo
+	 * set name=:name,address=:add where id=:id ,param涓湁3涓厓绱狅紝1 key ="name"
+	 * value="鍙傛暟鍊�" 2 key="add" value="鍙傛暟鐨勫��" 3 key="id" value="鍙傛暟鐨勫��";
+	 * 濡傛灉hql涓病鏈夊弬鏁帮紝param瀵硅薄缃负NULL 2010-1-22 
 	 * 
 	 * @param hql
 	 * @param param
@@ -131,7 +131,7 @@ public class HibernateBaseDAO2 {
 	}
 
 	/**
-	 * 更新或者新增一条记录，如果有新ID就是新增，否则就是更新。
+	 * 鏇存柊鎴栬�呮柊澧炰竴鏉¤褰曪紝濡傛灉鏈夋柊ID灏辨槸鏂板锛屽惁鍒欏氨鏄洿鏂般��
 	 * 
 	 * @param entity
 	 *@throws HibernateException
@@ -147,7 +147,7 @@ public class HibernateBaseDAO2 {
 	}
 
 	/**
-	 * Description:新增或者保存多个 hibernate pojo
+	 * Description:鏂板鎴栬�呬繚瀛樺涓� hibernate pojo
 	 * 
 	 * @param objList
 	 *            hibernate pojo
@@ -181,7 +181,7 @@ public class HibernateBaseDAO2 {
 	}
 
 	/**
-	 * 根据pojo对象删除数据
+	 * 鏍规嵁pojo瀵硅薄鍒犻櫎鏁版嵁
 	 * 
 	 * @param entity
 	 * 
@@ -192,10 +192,10 @@ public class HibernateBaseDAO2 {
 	}
 
 	/**
-	 *使用delete from pojo 语句批量删除,如果hql语句带有参数，那么param参数不为空 例子 delete from pojo
-	 * where name=:name and age>:age1 and age<:age2 ,param中有3个元素，1 key ="name"
-	 * value="参数值" 2 key="age1" value="参数的值" 3 key="age2" value="参数的值";
-	 * 如果hql中没有参数，param对象置为NULL 2010-1-22 
+	 *浣跨敤delete from pojo 璇彞鎵归噺鍒犻櫎,濡傛灉hql璇彞甯︽湁鍙傛暟锛岄偅涔坧aram鍙傛暟涓嶄负绌� 渚嬪瓙 delete from pojo
+	 * where name=:name and age>:age1 and age<:age2 ,param涓湁3涓厓绱狅紝1 key ="name"
+	 * value="鍙傛暟鍊�" 2 key="age1" value="鍙傛暟鐨勫��" 3 key="age2" value="鍙傛暟鐨勫��";
+	 * 濡傛灉hql涓病鏈夊弬鏁帮紝param瀵硅薄缃负NULL 2010-1-22 
 	 * 
 	 * @param hql
 	 *@param param
@@ -212,7 +212,7 @@ public class HibernateBaseDAO2 {
 	}
 
 	/**
-	 * 批量删除POJO List
+	 * 鎵归噺鍒犻櫎POJO List
 	 * 
 	 * @param ObjectList
 	 */
@@ -227,13 +227,13 @@ public class HibernateBaseDAO2 {
 	}
 
 	/**
-	 * Description:装载指定ID的hibernate pojo
+	 * Description:瑁呰浇鎸囧畾ID鐨刪ibernate pojo
 	 * 
 	 * @param entityClass
-	 *            pojo类名
+	 *            pojo绫诲悕
 	 * @param id
-	 *            pojo的id
-	 * @return object entityClass对应的pojo
+	 *            pojo鐨刬d
+	 * @return object entityClass瀵瑰簲鐨刾ojo
 	 * @throws HibernateException
 	 */
 	public Object load(Class<?> entityClass, Serializable id) throws HibernateException {
@@ -242,10 +242,10 @@ public class HibernateBaseDAO2 {
 	}
 	
 	/**
-	* 根据hql语句查询数据，返回的结果集list 为map元素集合。hql 中检索字段的字段一定要到有 as 别名，map中key的值就是 字段的 as别名，
-	* value值就是字段的值。param 为hql语句中参数值，如果hql中带有参数，param不为空 例如：
-	* selec field1 as a ，field2 as b from Ttable where field3 =:asdf,param中就有一个元素，key=asdf,value=参数值，
-	* 如果hql中没有参数，param置为NULL。
+	* 鏍规嵁hql璇彞鏌ヨ鏁版嵁锛岃繑鍥炵殑缁撴灉闆唋ist 涓簃ap鍏冪礌闆嗗悎銆俬ql 涓绱㈠瓧娈电殑瀛楁涓�瀹氳鍒版湁 as 鍒悕锛宮ap涓璳ey鐨勫�煎氨鏄� 瀛楁鐨� as鍒悕锛�
+	* value鍊煎氨鏄瓧娈电殑鍊笺�俻aram 涓篽ql璇彞涓弬鏁板�硷紝濡傛灉hql涓甫鏈夊弬鏁帮紝param涓嶄负绌� 渚嬪锛�
+	* selec field1 as a 锛宖ield2 as b from Ttable where field3 =:asdf,param涓氨鏈変竴涓厓绱狅紝key=asdf,value=鍙傛暟鍊硷紝
+	* 濡傛灉hql涓病鏈夊弬鏁帮紝param缃负NULL銆�
 	* 2010-1-28 
 	* xusm
 	*@param hql
@@ -259,12 +259,12 @@ public class HibernateBaseDAO2 {
 	}
 	
 	/**
-	 * 根据hql语句查询数据，返回的结果集list 为map元素集合。hql 中检索字段的字段一定要到有 as 别名，map中key的值就是 字段的 as别名，
-	 * value值就是字段的值。param 为hql语句中参数值，如果hql中带有参数，param不为空 例如：
-	 * selec field1 as a ，field2 as b from Ttable where field3 =:asdf,param中就有一个元素，key=asdf,value=参数值，
-	 * 如果hql中没有参数，param置为NULL。
+	 * 鏍规嵁hql璇彞鏌ヨ鏁版嵁锛岃繑鍥炵殑缁撴灉闆唋ist 涓簃ap鍏冪礌闆嗗悎銆俬ql 涓绱㈠瓧娈电殑瀛楁涓�瀹氳鍒版湁 as 鍒悕锛宮ap涓璳ey鐨勫�煎氨鏄� 瀛楁鐨� as鍒悕锛�
+	 * value鍊煎氨鏄瓧娈电殑鍊笺�俻aram 涓篽ql璇彞涓弬鏁板�硷紝濡傛灉hql涓甫鏈夊弬鏁帮紝param涓嶄负绌� 渚嬪锛�
+	 * selec field1 as a 锛宖ield2 as b from Ttable where field3 =:asdf,param涓氨鏈変竴涓厓绱狅紝key=asdf,value=鍙傛暟鍊硷紝
+	 * 濡傛灉hql涓病鏈夊弬鏁帮紝param缃负NULL銆�
 	 * 
-	 * 当targetPage=-1时 表示不分页。	
+	 * 褰搕argetPage=-1鏃� 琛ㄧず涓嶅垎椤点��	
 	 * 2010-1-28 
 	 * xusm
 	 *@param hql
@@ -301,7 +301,7 @@ public class HibernateBaseDAO2 {
 		}
 		// finder.setParamsToQuery(query);
 
-		if (targetPage != -1) {// 等于-1时，不作分页
+		if (targetPage != -1) {// 绛変簬-1鏃讹紝涓嶄綔鍒嗛〉
 			query.setFirstResult((int)p.getFirstResult());
 			query.setMaxResults((int)p.getPageSize());
 		}
@@ -314,7 +314,7 @@ public class HibernateBaseDAO2 {
 			p.setList(returnList);
 			return p;
 		}
-		if (name != null && name.length > 1 && list.get(0) instanceof Object[]) {// 对象数组
+		if (name != null && name.length > 1 && list.get(0) instanceof Object[]) {// 瀵硅薄鏁扮粍
 			for (Iterator iter = list.iterator(); iter.hasNext();) {
 				Object[] data = (Object[]) iter.next();
 				HashMap map = new HashMap();
@@ -343,7 +343,7 @@ public class HibernateBaseDAO2 {
 				}
 				returnList.add(map);
 			}
-		} else {// 对象
+		} else {// 瀵硅薄
 			for (Iterator iter = list.iterator(); iter.hasNext();) {
 				Object data = (Object) iter.next();
 				HashMap map = new HashMap();
@@ -356,7 +356,7 @@ public class HibernateBaseDAO2 {
 		return p;
 	}
 	/**
-	 * 以升序或者降序的规则，获得一个表的所有记录
+	 * 浠ュ崌搴忔垨鑰呴檷搴忕殑瑙勫垯锛岃幏寰椾竴涓〃鐨勬墍鏈夎褰�
 	 * 
 	 * @param entityClass
 	 *@param orders
@@ -368,7 +368,7 @@ public class HibernateBaseDAO2 {
 	}
 
 	/**
-	 * 升序或者降序的规则，获得一个表的分页记录
+	 * 鍗囧簭鎴栬�呴檷搴忕殑瑙勫垯锛岃幏寰椾竴涓〃鐨勫垎椤佃褰�
 	 * 
 	 * @param entityClass
 	 *@param pageNo
@@ -394,12 +394,12 @@ public class HibernateBaseDAO2 {
 	}
 
 	/**
-	 * 按HQL查询对象列表返回的结果集是Object数组的List.
+	 * 鎸塇QL鏌ヨ瀵硅薄鍒楄〃杩斿洖鐨勭粨鏋滈泦鏄疧bject鏁扮粍鐨凩ist.
 	 * 
 	 * @param hql
-	 *            hql语句
+	 *            hql璇彞
 	 * @param param
-	 *            参数名值对，如果没有参数请置为null。
+	 *            鍙傛暟鍚嶅�煎锛屽鏋滄病鏈夊弬鏁拌缃负null銆�
 	 */
 	@SuppressWarnings("rawtypes")
 	public List find(String hql, Map param) throws HibernateException {
@@ -413,12 +413,12 @@ public class HibernateBaseDAO2 {
 	
 
 	/**
-	 * 按HQL查询对象列表返回的结果集是Object数组的List.
+	 * 鎸塇QL鏌ヨ瀵硅薄鍒楄〃杩斿洖鐨勭粨鏋滈泦鏄疧bject鏁扮粍鐨凩ist.
 	 * 
 	 * @param hql
-	 *            hql语句
+	 *            hql璇彞
 	 * @param param
-	 *            参数名值对，如果没有参数请置为null。
+	 *            鍙傛暟鍚嶅�煎锛屽鏋滄病鏈夊弬鏁拌缃负null銆�
 	 */
 	@SuppressWarnings("rawtypes")
 	public List find(String hql, Map param, int size) throws HibernateException {
@@ -434,7 +434,7 @@ public class HibernateBaseDAO2 {
 	}
 	
 	/**
-	 * 按HQL查询唯一对象.
+	 * 鎸塇QL鏌ヨ鍞竴瀵硅薄.
 	 */
 	@SuppressWarnings("rawtypes")
 	public Object findUnique(String hql, Map param) throws HibernateException {
@@ -446,7 +446,7 @@ public class HibernateBaseDAO2 {
 	}
 		
 	/**
-	 * 根据Finder 查询数据
+	 * 鏍规嵁Finder 鏌ヨ鏁版嵁
 	 * 
 	 * @param finder
 	 *@param pageNo
@@ -475,7 +475,7 @@ public class HibernateBaseDAO2 {
 	
 	
 	/**
-	 * 按HQL查询唯一对象.
+	 * 鎸塇QL鏌ヨ鍞竴瀵硅薄.
 	 */
 	@SuppressWarnings("rawtypes")
 	public Object findOne(String hql, Map param) throws HibernateException {
@@ -495,7 +495,7 @@ public class HibernateBaseDAO2 {
 	}
 
 	/**
-	 * 按属性查找对象列表.
+	 * 鎸夊睘鎬ф煡鎵惧璞″垪琛�.
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<Object> findByProperty(Class entityClass, String property, Object value) throws HibernateException {
@@ -508,7 +508,7 @@ public class HibernateBaseDAO2 {
 	}
 
 	/**
-	 * 按属性查找唯一对象.
+	 * 鎸夊睘鎬ф煡鎵惧敮涓�瀵硅薄.
 	 */
 	@SuppressWarnings("rawtypes")
 	public Object findUniqueByProperty(Class entityClass, String property, Object value) throws HibernateException {
@@ -534,7 +534,7 @@ public class HibernateBaseDAO2 {
 	}
 
 	/**
-	 * 根据Finder 分页查询数据
+	 * 鏍规嵁Finder 鍒嗛〉鏌ヨ鏁版嵁
 	 * 
 	 * @param finder
 	 *@param pageNo
@@ -569,7 +569,7 @@ public class HibernateBaseDAO2 {
 	}
 
 	/**
-	 * 根据Finder获得数据
+	 * 鏍规嵁Finder鑾峰緱鏁版嵁
 	 * 
 	 * @param finder
 	 *@return
@@ -580,7 +580,7 @@ public class HibernateBaseDAO2 {
 	}
 
 	/**
-	 * 根据Conds he exclude条件获得 结果
+	 * 鏍规嵁Conds he exclude鏉′欢鑾峰緱 缁撴灉
 	 * 
 	 * @param eg
 	 *@param anyWhere
@@ -641,7 +641,7 @@ public class HibernateBaseDAO2 {
 	private Object updateByUpdater(Updater updater) throws HibernateException {
 		ClassMetadata cm = getCmd(updater.getBean().getClass());
 		if (cm == null) {
-			throw new HibernateException("所更新的对象没有映射或不是实体对象");
+			throw new HibernateException("鎵�鏇存柊鐨勫璞℃病鏈夋槧灏勬垨涓嶆槸瀹炰綋瀵硅薄");
 		}
 		Object bean = updater.getBean();
 		Session session = getSession();
@@ -651,7 +651,7 @@ public class HibernateBaseDAO2 {
 	}
 
 	/**
-	 * 根据查询函数与参数列表创建Query对象,后续可进行更多处理,辅助函数.
+	 * 鏍规嵁鏌ヨ鍑芥暟涓庡弬鏁板垪琛ㄥ垱寤篞uery瀵硅薄,鍚庣画鍙繘琛屾洿澶氬鐞�,杈呭姪鍑芥暟.
 	 */
 	@SuppressWarnings("rawtypes")
 	private Query createQuery(Session session, String queryString, Map param) {
@@ -686,7 +686,7 @@ public class HibernateBaseDAO2 {
 	}
 
 	/**
-	 * 通过count查询获得本次查询所能获得的对象总数.
+	 * 閫氳繃count鏌ヨ鑾峰緱鏈鏌ヨ鎵�鑳借幏寰楃殑瀵硅薄鎬绘暟.
 	 * 
 	 * @param finder
 	 * @return
@@ -717,7 +717,7 @@ public class HibernateBaseDAO2 {
 	
 	
 	/**
-	 * 通过count查询获得本次查询所能获得的对象总数.
+	 * 閫氳繃count鏌ヨ鑾峰緱鏈鏌ヨ鎵�鑳借幏寰楃殑瀵硅薄鎬绘暟.
 	 * 
 	 * @param finder
 	 * @return
@@ -755,7 +755,7 @@ public class HibernateBaseDAO2 {
 			example.excludeProperty(p);
 		}
 		crit.add(example);
-		// 处理排序和is null字段
+		// 澶勭悊鎺掑簭鍜宨s null瀛楁
 		if (conds != null) {
 			for (Condition o : conds) {
 				if (o instanceof OrderBy) {
@@ -773,7 +773,7 @@ public class HibernateBaseDAO2 {
 				}
 			}
 		}
-		// 处理many to one查询
+		// 澶勭悊many to one鏌ヨ
 		ClassMetadata cm = getCmd(bean.getClass());
 		String[] fieldNames = cm.getPropertyNames();
 		for (String field : fieldNames) {
@@ -797,7 +797,7 @@ public class HibernateBaseDAO2 {
 	}
 
 	/**
-	 * 将更新对象拷贝至实体对象，并处理many-to-one的更新。
+	 * 灏嗘洿鏂板璞℃嫹璐濊嚦瀹炰綋瀵硅薄锛屽苟澶勭悊many-to-one鐨勬洿鏂般��
 	 * 
 	 * @param updater
 	 * @param po
@@ -817,7 +817,7 @@ public class HibernateBaseDAO2 {
 				ClassMetadata cm = getCmd(valueClass);
 				if (cm != null) {
 					Serializable vid = cm.getIdentifier(value);
-					// 如果更新的many to one的对象的id为空，则将many to one设置为null。
+					// 濡傛灉鏇存柊鐨刴any to one鐨勫璞＄殑id涓虹┖锛屽垯灏唌any to one璁剧疆涓簄ull銆�
 					if (vid != null) {
 						value = getSession().load(valueClass, vid);
 					} else {
@@ -829,13 +829,13 @@ public class HibernateBaseDAO2 {
 				PropertyUtils.setProperty(po, name, value);
 			} catch (Exception e) {
 				// never
-				logger.warn("更新对象时，拷贝属性异常", e);
+				logger.warn("鏇存柊瀵硅薄鏃讹紝鎷疯礉灞炴�у紓甯�", e);
 			}
 		}
 	}
 
 	/**
-	 * 根据Criterion条件创建Criteria,后续可进行更多处理,辅助函数.
+	 * 鏍规嵁Criterion鏉′欢鍒涘缓Criteria,鍚庣画鍙繘琛屾洿澶氬鐞�,杈呭姪鍑芥暟.
 	 */
 	@SuppressWarnings("rawtypes")
 	private Criteria createCriteria(Session session, Class entityClass, Criterion... criterions) {
@@ -864,7 +864,7 @@ public class HibernateBaseDAO2 {
 		}
 	}
 	/**
-	 * 取得pojo中所有成员变量名
+	 * 鍙栧緱pojo涓墍鏈夋垚鍛樺彉閲忓悕
 	 *
 	 * @param beanClass
 	 *            pojo
@@ -905,7 +905,7 @@ public class HibernateBaseDAO2 {
 	public static final NotBlankPropertySelector NOT_BLANK = new NotBlankPropertySelector();
 
 	/**
-	 * 不为空的EXAMPLE属性选择方式
+	 * 涓嶄负绌虹殑EXAMPLE灞炴�ч�夋嫨鏂瑰紡
 	 * 
 	 * @author xusm
 	 * 

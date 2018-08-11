@@ -13,6 +13,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.MappingException;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.Configurable;
 import org.hibernate.id.IdentifierGenerationException;
 import org.hibernate.id.IdentifierGenerator;
@@ -42,8 +43,21 @@ public class IDGenerator implements IdentifierGenerator, Configurable {
 		}
 		return createId(next++, returnClass);
 	}
+	
+	@Override
+	public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
+		if (selectsql != null) {
+			this.getNext(session.connection(), object);
+		}
+		return createId(next++, returnClass);
+	}
 
-	public void configure(Type type, Properties params, Dialect d) throws MappingException {
+	@Override
+	public void configure(Type type, Properties params, ServiceRegistry registry) throws MappingException {
+		this.configureD(type, params, null);
+	}
+	
+	public void configureD(Type type, Properties params, Dialect dialect) throws MappingException {
 		table = params.getProperty("table");
 		if (table == null)
 			table = params.getProperty(PersistentIdentifierGenerator.TABLE);
@@ -113,9 +127,4 @@ public class IDGenerator implements IdentifierGenerator, Configurable {
 		}
 	}
 
-	@Override
-	public void configure(Type arg0, Properties arg1, ServiceRegistry arg2) throws MappingException {
-		// TODO Auto-generated method stub
-		
-	}
 }

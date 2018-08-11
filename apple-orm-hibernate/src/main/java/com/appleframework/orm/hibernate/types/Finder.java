@@ -217,6 +217,7 @@ public class Finder implements Serializable {
 	 * 
 	 * @param query
 	 */
+	@SuppressWarnings("rawtypes")
 	public Query setParamsToQuery(Query query) {
 		if (params != null) {
 			for (int i = 0; i < params.size(); i++) {
