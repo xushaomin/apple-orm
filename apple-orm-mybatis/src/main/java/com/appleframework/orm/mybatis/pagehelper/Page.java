@@ -27,7 +27,7 @@ package com.appleframework.orm.mybatis.pagehelper;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.appleframework.model.page.PageBean;
+import com.appleframework.model.page.Paginator;
 import com.appleframework.model.page.Pagination;
 
 /**
@@ -327,8 +327,8 @@ public class Page<E> extends ArrayList<E> {
      *
      * @return
      */
-    public PageBean<E> toPageBean() {
-    	PageBean<E> page = new PageBean<E>(this.pageNum, this.pageSize, this.total);
+    public Paginator<E> toPageBean() {
+    	Paginator<E> page = new Paginator<E>(this.pageNum, this.pageSize, this.total);
     	page.setList(this.getResult());
         return page;
     }
@@ -343,7 +343,7 @@ public class Page<E> extends ArrayList<E> {
         return this.toPagination();
     }
     
-    public PageBean<E> doSelectPageBean(ISelect select) {
+    public Paginator<E> doSelectPageBean(ISelect select) {
         select.doSelect();
         return this.toPageBean();
     }
