@@ -327,7 +327,7 @@ public class Page<E> extends ArrayList<E> {
      *
      * @return
      */
-    public Paginator<E> toPageBean() {
+    public Paginator<E> toPaginator() {
     	Paginator<E> page = new Paginator<E>(this.pageNum, this.pageSize, this.total);
     	page.setList(this.getResult());
         return page;
@@ -345,7 +345,7 @@ public class Page<E> extends ArrayList<E> {
     
     public Paginator<E> doSelectPageBean(ISelect select) {
         select.doSelect();
-        return this.toPageBean();
+        return this.toPaginator();
     }
 
     public long doCount(ISelect select) {
