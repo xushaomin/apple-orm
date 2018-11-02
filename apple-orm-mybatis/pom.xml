@@ -7,7 +7,7 @@
 	<parent>
 		<artifactId>apple-orm</artifactId>
 		<groupId>com.appleframework.orm</groupId>
-		<version>0.1.6.RELEASE</version>
+		<version>0.1.7.RELEASE</version>
 	</parent>
 	<artifactId>apple-orm-mybatis</artifactId>
 	<name>apple-orm-mybatis</name>
