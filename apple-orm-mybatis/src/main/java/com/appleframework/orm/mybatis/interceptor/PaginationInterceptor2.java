@@ -45,10 +45,10 @@ import com.appleframework.orm.mybatis.utils.SystemUtility;
  * @author cruise.xu
  * 
  */
-@Intercepts({ @Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class, Integer.class }) })
-public class PaginationInterceptor extends PaginationHelper implements Interceptor {
+@Intercepts({ @Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class }) })
+public class PaginationInterceptor2 extends PaginationHelper implements Interceptor {
 
-	private static Logger logger = Logger.getLogger(PaginationInterceptor.class);
+	private static Logger logger = Logger.getLogger(PaginationInterceptor2.class);
 
 	private String dialect = "mysql";
 
