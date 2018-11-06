@@ -31,7 +31,8 @@ import org.apache.ibatis.scripting.xmltags.ForEachSqlNode;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.type.TypeHandler;
 import org.apache.ibatis.type.TypeHandlerRegistry;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.appleframework.model.page.SimplePage;
 import com.appleframework.orm.mybatis.parser.SqlParser;
@@ -48,7 +49,7 @@ import com.appleframework.orm.mybatis.utils.SystemUtility;
 @Intercepts({ @Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class }) })
 public class PaginationInterceptor2 extends PaginationHelper implements Interceptor {
 
-	private static Logger logger = Logger.getLogger(PaginationInterceptor2.class);
+	private static Logger logger = LoggerFactory.getLogger(PaginationInterceptor2.class);
 
 	private String dialect = "mysql";
 
