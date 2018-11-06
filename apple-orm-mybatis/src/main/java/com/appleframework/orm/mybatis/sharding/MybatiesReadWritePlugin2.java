@@ -26,10 +26,10 @@ import org.slf4j.LoggerFactory;
 /**
  * mybaties定义mycat读写分离插件
  */
-@Intercepts({ @Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class, Integer.class }) })
-public class MybatiesReadWritePlugin implements Interceptor {
+@Intercepts({ @Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class }) })
+public class MybatiesReadWritePlugin2 implements Interceptor {
 
-	private static Logger logger = LoggerFactory.getLogger(MybatiesReadWritePlugin.class);
+	private static Logger logger = LoggerFactory.getLogger(MybatiesReadWritePlugin2.class);
 
 	private static volatile ConcurrentHashMap<String, MasterCacheWrap> cache = new ConcurrentHashMap<>();
 
