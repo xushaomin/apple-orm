@@ -14,7 +14,7 @@
 	<properties>
 		<hibernate.version>5.3.4.Final</hibernate.version>
 		<hibernate.validator.version>6.0.12.Final</hibernate.validator.version>
-		<spring.version>4.2.0.RELEASE</spring.version>
+		<spring.version>5.2.0.RELEASE</spring.version>
 		<commons.lang.version>2.4</commons.lang.version>
 		<commons.lang3.version>3.1</commons.lang3.version>
 		<commons.beanutils.version>1.7.0</commons.beanutils.version>
