@@ -5,7 +5,7 @@
 
 	<groupId>com.appleframework.orm</groupId>
 	<artifactId>apple-orm</artifactId>
-	<version>0.2.0.RELEASE</version>
+	<version>0.2.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>apple-orm</name>
@@ -20,8 +20,8 @@
 		<commons.beanutils.version>1.7.0</commons.beanutils.version>
 		<mysql.version>5.1.45</mysql.version>
 		<apple.version>0.2.1.RELEASE</apple.version>
-		<mybatis.version>3.4.6</mybatis.version>
-		<mybatis.spring.version>1.3.2</mybatis.spring.version>
+		<mybatis.version>3.5.1</mybatis.version>
+		<mybatis.spring.version>2.0.1</mybatis.spring.version>
 		<slf4j.version>1.7.2</slf4j.version>
 	</properties>
 
@@ -313,11 +313,11 @@
 			<distributionManagement>
 				<repository>
 					<id>apple-releases</id>
-					<url>http://mvnrepo.appleframework.com:8081/nexus/content/repositories/releases/</url>
+					<url>http://maven.huolala.cn/repository/apple-releases/</url>
 				</repository>
 				<snapshotRepository>
 					<id>apple-snapshots</id>
-					<url>http://mvnrepo.appleframework.com:8081/nexus/content/repositories/snapshots/</url>
+					<url>http://maven.huolala.cn/repository/apple-snapshots/</url>
 				</snapshotRepository>
 			</distributionManagement>
 		</profile>
