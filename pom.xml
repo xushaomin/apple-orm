@@ -18,7 +18,7 @@
 		<commons.lang.version>2.4</commons.lang.version>
 		<commons.lang3.version>3.1</commons.lang3.version>
 		<commons.beanutils.version>1.7.0</commons.beanutils.version>
-		<mysql.version>5.1.45</mysql.version>
+		<mysql.version>8.0.28</mysql.version>
 		<apple.version>0.2.1.RELEASE</apple.version>
 		<mybatis.version>3.5.1</mybatis.version>
 		<mybatis.spring.version>2.0.1</mybatis.spring.version>
